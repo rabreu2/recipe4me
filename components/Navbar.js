@@ -7,7 +7,7 @@ const Nav = styled.nav`
     height: 80px;
     background: #000;
     display: flex;
-    justify-content: right;
+    justify-content: left;
     align-items: center;
     `;
 
