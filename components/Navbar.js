@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
 
 const Nav = styled.nav`
@@ -12,29 +13,28 @@ const Nav = styled.nav`
     align-items: center;
     `;
 
-const NavElements = styled.div`
+const StyledLink = styled.a`
     padding: 0rem 2rem; 
 `;
 
-const Logo = styled.a`
-    display: flex;
-    height: 75px;
-    width: 91px;   
-`;
+
 
 const Navbar = () => {
   return (
     <Nav>
-        <NavElements>
-            <Logo href={"/"}>
-                <Image
+        <div>
+            <Link href={"/"}>
+                <StyledLink>
+                    <Image
+                    priority={true}
                     src={logo}
                     width={90}
                     height={45}
                     alt="Recipe4Me Logo"
-                />
-            </Logo>
-        </NavElements>
+                    />
+                </StyledLink>
+            </Link>
+        </div>
     </Nav>
   );
 }
