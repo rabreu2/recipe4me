@@ -5,8 +5,8 @@ const Hero = styled.div`
   height: 90vh;
   display: flex;
   justify-content: center;
-  align-tems: center;
-  background: #fff;
+  align-items: center;
+  background: #ebe8d8;
 `
 
 const Heading = styled.h1`
@@ -20,5 +20,5 @@ export default function Home() {
     <Hero>
       <Heading>Home</Heading>
     </Hero>
-  );
+  )
 }

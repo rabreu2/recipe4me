@@ -1,21 +1,16 @@
 'use client'
 
 import Link from "next/link";
-import styled from "styled-components"
+import styled from "styled-components";
+import Image from "next/image";
+import logo from "../public/grocery4me-icon.png";
 
 const Nav = styled.nav`
     height: 80px;
-    background: #000;
+    background: #c9c7b9;
     display: flex;
     justify-content: left;
     align-items: center;
-    `;
-
-const StyledLink = styled.a`
-    color: #d9d9d9;
-    &:hover {
-        color: #56c495;
-    }
     `;
 
 const NavElements = styled.div`
@@ -26,7 +21,14 @@ const Navbar = () => {
   return (
     <Nav>
         <NavElements>
-            <Link href={"/"}><StyledLink>Home</StyledLink></Link>
+            <Link href={"/"}>
+                <Image
+                    src={logo}
+                    width={50}
+                    height={50}
+                    alt="Recipe4Me Logo"
+                />
+            </Link>
         </NavElements>
     </Nav>
   )
