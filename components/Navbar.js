@@ -6,7 +6,7 @@ import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
 
 const Nav = styled.nav`
-    height: 80px;
+    height: 8vh;
     background: #c9c7b9;
     display: flex;
     justify-content: left;
@@ -14,7 +14,8 @@ const Nav = styled.nav`
     `;
 
 const StyledLink = styled.a`
-    padding: 0rem 2rem; 
+    padding: 0rem 1rem; 
+    display: block;
 `;
 
 
