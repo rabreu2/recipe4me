@@ -3,9 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const FooterStyle = styled.div`
-    background: #000;
+    background: #c9c7b9;
     color: #9c9c9c;
-    height: 60px;
+    height: 5vh;
     display: flex;
     font-size: .85rem;
     justify-content: center;
@@ -17,7 +17,7 @@ const Footer = () => {
     <FooterStyle>
         <p>Ray Abreu ©2024</p>
     </FooterStyle>
-  )
+  );
 }
 
 export default Footer

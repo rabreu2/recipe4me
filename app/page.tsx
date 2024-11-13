@@ -2,11 +2,11 @@
 import styled from "styled-components";
 
 const Hero = styled.div`
-  height: 90vh;
+  height: 88vh;
   display: flex;
   justify-content: center;
-  align-tems: center;
-  background: #fff;
+  align-items: center;
+  background: #ebe8d8;
 `
 
 const Heading = styled.h1`
