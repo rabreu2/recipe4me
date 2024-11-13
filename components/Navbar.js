@@ -6,7 +6,7 @@ import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
 
 const Nav = styled.nav`
-    height: 8vh;
+    height: 7vh;
     background: #c9c7b9;
     display: flex;
     justify-content: left;
@@ -14,7 +14,7 @@ const Nav = styled.nav`
     `;
 
 const StyledLink = styled.a`
-    padding: 0rem 1rem; 
+    padding: 0rem 0.5rem; 
     display: block;
 `;
 
@@ -29,7 +29,7 @@ const Navbar = () => {
                     <Image
                     priority={true}
                     src={logo}
-                    width={90}
+                    width={75}
                     height={45}
                     alt="Recipe4Me Logo"
                     />

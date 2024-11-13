@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const FooterStyle = styled.div`
     background: #c9c7b9;
     color: #9c9c9c;
-    height: 4vh;
+    height: 5vh;
     display: flex;
     font-size: .85rem;
     justify-content: center;
