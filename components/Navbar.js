@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import styled from "styled-components";
 import Image from "next/image";
 import logo from "../public/grocery4me-icon.png";
@@ -14,24 +13,30 @@ const Nav = styled.nav`
     `;
 
 const NavElements = styled.div`
-    padding: 0rem 2rem;     
+    padding: 0rem 2rem; 
+`;
+
+const Logo = styled.a`
+    display: flex;
+    height: 75px;
+    width: 91px;   
 `;
 
 const Navbar = () => {
   return (
     <Nav>
         <NavElements>
-            <Link href={"/"}>
+            <Logo href={"/"}>
                 <Image
                     src={logo}
-                    width={50}
-                    height={50}
+                    width={90}
+                    height={45}
                     alt="Recipe4Me Logo"
                 />
-            </Link>
+            </Logo>
         </NavElements>
     </Nav>
-  )
+  );
 }
 
 export default Navbar

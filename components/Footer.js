@@ -17,7 +17,7 @@ const Footer = () => {
     <FooterStyle>
         <p>Ray Abreu ©2024</p>
     </FooterStyle>
-  )
+  );
 }
 
 export default Footer

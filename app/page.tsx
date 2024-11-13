@@ -20,5 +20,5 @@ export default function Home() {
     <Hero>
       <Heading>Home</Heading>
     </Hero>
-  )
+  );
 }
