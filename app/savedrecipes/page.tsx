@@ -1,6 +1,6 @@
 'use client'
 import styled from "styled-components";
-import read from "./form-action";
+import read from "../form-action";
 
 const Hero = styled.div`
   height: 88vh;
@@ -16,7 +16,7 @@ const Heading = styled.h1`
   font-weight: 900;
 `
 
-export default function Home() {
+export default function SavedRecipes() {
   
   return (
     <Hero>

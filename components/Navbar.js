@@ -1,43 +1,84 @@
 'use client'
-
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
+import { PowerIcon } from '@heroicons/react/24/outline';
+import {useRouter} from "next/navigation";
+import axios from "axios";
+import { useContext } from "react";
+import { LoginContext } from "@/app/LoginContext";
 
 const Nav = styled.nav`
     height: 7vh;
     background: #c9c7b9;
-    display: flex;
-    justify-content: left;
-    align-items: center;
     `;
 
 const StyledLink = styled.a`
     padding: 0rem 0.5rem; 
     display: block;
+    color: #000;
 `;
 
+const NavLeft = styled.div`
+    display: flex;
+    float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 0.5rem;
+`;
 
+const NavRight = styled.div`
+    display: flex;
+    float: right;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 1rem;
+`;
 
-const Navbar = () => {
-  return (
-    <Nav>
-        <div>
-            <Link href={"/"}>
-                <StyledLink>
-                    <Image
-                    priority={true}
-                    src={logo}
-                    width={75}
-                    height={45}
-                    alt="Recipe4Me Logo"
-                    />
-                </StyledLink>
-            </Link>
-        </div>
-    </Nav>
-  );
+const Navbar =  () => {
+    const router = useRouter();
+    const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
+
+    const logout = async () => {
+        try {
+            await axios.get('/api/users/logout');
+            setIsLoggedIn(false);
+            router.push('/login')
+        } catch (error) {
+            console.log(error.message)
+        }
+    };
+    return (
+        <Nav>
+            <NavLeft>
+                <Link href={"/"}>
+                    <StyledLink>
+                        <Image
+                        priority={true}
+                        src={logo}
+                        width={75}
+                        height={45}
+                        alt="Recipe4Me Logo"
+                        />
+                    </StyledLink>
+                </Link>
+            </NavLeft>
+            <NavRight>
+                {!isLoggedIn ? (
+                    <Link href={"/login"}><StyledLink>Login</StyledLink></Link>
+                ) :
+                (
+                    <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+                        <PowerIcon className="w-6" />
+                        <div className="hidden md:block">Sign Out</div>
+                    </button>
+                )}
+            </NavRight>
+        </Nav>
+    ) 
 }
 
-export default Navbar
+export default Navbar;

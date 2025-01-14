@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "pages/_document.js"
-  ],
+, "components/Navbar.js"  ],
   "exclude": [
     "node_modules"
   ]
