@@ -1,6 +1,6 @@
 'use client'
 import styled from "styled-components";
-import read from "./form-action";
+import read from "../form-action";
 
 const Hero = styled.div`
   height: 88vh;
@@ -10,7 +10,7 @@ const Hero = styled.div`
   background: #ebe8d8;
 `
 
-export default function Home() {
+export default function SavedRecipes() {
   
   return (
     <Hero>
