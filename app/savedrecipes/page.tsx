@@ -10,12 +10,6 @@ const Hero = styled.div`
   background: #ebe8d8;
 `
 
-const Heading = styled.h1`
-  color: #000;
-  font-size: 10rem;
-  font-weight: 900;
-`
-
 export default function SavedRecipes() {
   
   return (

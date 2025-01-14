@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
 import { useContext } from "react";
@@ -17,8 +17,11 @@ const LoginPage: React.FC = () => {
 
     const onLogin = async () => {
         try {
+            if (isLoggedIn) {
+                router.push("/");
+            }
             setLoading(true);
-            const response = await axios.post("/api/users/login", user);
+            await axios.post("/api/users/login", user);
             setIsLoggedIn(true);
             router.push("/");
         } catch (error:any) {
