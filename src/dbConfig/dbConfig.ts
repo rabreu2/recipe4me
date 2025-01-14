@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 export async function connect() {
     try {
+        // testing connect with .env
         mongoose.connect(process.env.MONGO_URI!);
         const connection = mongoose.connection;
 
