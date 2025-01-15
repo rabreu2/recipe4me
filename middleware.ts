@@ -11,8 +11,6 @@ export function middleware(request: NextRequest) {
   
   
   // If trying to access a protected path without a token, redirect to the login page
-    console.log('isPublicPath ' + isPublicPath);
-    console.log('token ' + token);
     if (!isPublicPath && !token) {
       return NextResponse.redirect(new URL('/login', request.nextUrl))
     }
