@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
 import { useContext } from "react";
 import { LoginContext } from "../LoginContext";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useSearchParams } from "next/navigation";
 
 const LoginPage: React.FC = () => {
     const router = useRouter();
@@ -31,8 +34,30 @@ const LoginPage: React.FC = () => {
         }
     }
 
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        // Check for the message in the query parameters
+
+        const message = searchParams?.get('message');
+    
+        if (message) {
+          toast.info(message as string, {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          });
+        }
+      }, [searchParams]);
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <ToastContainer />
         <h1>{loading ? "Processing" : "Login"}</h1>
         <hr />
         

@@ -12,7 +12,10 @@ export function middleware(request: NextRequest) {
   
   // If trying to access a protected path without a token, redirect to the login page
     if (!isPublicPath && !token) {
-      return NextResponse.redirect(new URL('/login', request.nextUrl))
+      const loginUrl = new URL('/login', request.nextUrl);
+      // Pass a query parameter to display the toast
+      loginUrl.searchParams.set('message', 'Please login to access this page.');
+      return NextResponse.redirect(loginUrl);
     }
       
   }
