@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
 import { useContext } from "react";
@@ -84,4 +84,10 @@ const LoginPage: React.FC = () => {
     )
 }
 
-export default LoginPage;
+const LoginPageWithSuspense = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPage />
+    </Suspense>
+  );
+
+export default LoginPageWithSuspense;
