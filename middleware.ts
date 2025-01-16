@@ -5,19 +5,17 @@ export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname
   
     // Public paths
-    const isPublicPath = path === '/signup' || path === '/verifyemail' || path === '/login'
+    const isPublicPath = path === '/signup' || path === '/verifyemail' || path === '/login' || path === '/'
   
-    const token = request.cookies.get('token')?.value || ''
+    const token = request.cookies.get('token')?.value;
   
-    if(isPublicPath && token) {
-  
-   // If trying to access a public path with a token, redirect to the home page
-      return NextResponse.redirect(new URL('/', request.nextUrl))
-    }
   
   // If trying to access a protected path without a token, redirect to the login page
     if (!isPublicPath && !token) {
-      return NextResponse.redirect(new URL('/login', request.nextUrl))
+      const loginUrl = new URL('/login', request.nextUrl);
+      // Pass a query parameter to display the toast
+      loginUrl.searchParams.set('message', 'Please login to access this page.');
+      return NextResponse.redirect(loginUrl);
     }
       
   }
@@ -25,11 +23,5 @@ export function middleware(request: NextRequest) {
   // It specifies the paths for which this middleware should be executed. 
   // In this case, it's applied to '/', '/savedrecipes', '/login', and '/signup'.
   export const config = {
-    matcher: [
-      '/',
-      '/savedrecipes',
-      '/login',
-      '/signup',
-      '/verifyemail'
-    ]
+    matcher: ['/savedrecipes', '/:path*/savedrecipes'],
   }
