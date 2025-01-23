@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Recipe4Me",
+  title: "Search Thousands of Official Recipes | Recipe4Me",
   description: "Welcome to my website!",
 };
 
