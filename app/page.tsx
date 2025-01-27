@@ -38,7 +38,7 @@ export default function Home() {
           />
         <RecipeForm action={read}>
           <div className="relative">
-            <input type="text" placeholder="Search for a recipe (e.g. Meatloaf)"  className="w-full pl-10 pr-4 py-2 text-gray-600 text-lg border rounded-xl focus:outline-none focus:ring focus:border-gray-900 hover:bg-gray-100" name="recipe" />
+            <input type="text" placeholder="Search for a recipe (e.g. Meatloaf)"  className="w-full pl-10 pr-4 py-2 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100" name="recipe" />
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
           <button className="hidden" type="submit">Submit</button>
