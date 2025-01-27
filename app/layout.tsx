@@ -6,6 +6,10 @@ import Footer from "@/components/Footer";
 import React from "react";
 import { AuthProvider } from "./LoginContext";
 
+// g4me green : #22b14c 
+// g4me dgreen : #187e37
+// g4me gray : #9c9c9c
+// g4me dgray : #737373
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

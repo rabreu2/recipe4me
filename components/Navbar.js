@@ -14,10 +14,39 @@ const Nav = styled.nav`
     background: #c9c7b9;
     `;
 
-const StyledLink = styled.a`
+const NavbarLogo = styled.a`
     padding: 0rem 0.5rem; 
     display: block;
     color: #000;
+`;
+
+const SignupLink = styled.a`
+    padding: 0.25rem 0.75rem; 
+    display: flex;
+    float: right;
+    position: relative;
+    color: #000;
+    border: 2px solid ${({ color }) => color || "#9c9c9c"};
+    border-radius: 20px;
+    background-color: #9c9c9c;
+    &:hover {
+        background-color: #737373;
+        border-color: #737373;
+    }
+`;
+
+const LoginLink = styled.a`
+    padding: 0.25rem 0.75rem;
+    margin-right: 0.5rem;
+    display: flex;
+    float: left;
+    position: relative;
+    color: #000;
+    border: 2px solid ${({ color }) => color || "#9c9c9c"};
+    border-radius: 20px;
+    &:hover {
+        background-color: #9c9c9c;
+    }
 `;
 
 const NavLeft = styled.div`
@@ -55,7 +84,7 @@ const Navbar =  () => {
         <Nav>
             <NavLeft>
                 <Link href={"/"}>
-                    <StyledLink>
+                    <NavbarLogo>
                         <Image
                         priority={true}
                         src={logo}
@@ -63,12 +92,15 @@ const Navbar =  () => {
                         height={45}
                         alt="Recipe4Me Logo"
                         />
-                    </StyledLink>
+                    </NavbarLogo>
                 </Link>
             </NavLeft>
             <NavRight>
                 {!isLoggedIn ? (
-                    <Link href={"/login"}><StyledLink>Login</StyledLink></Link>
+                    <div>
+                        <Link href={"/login"}><LoginLink>Sign in</LoginLink></Link>
+                        <Link href={"/signup"}><SignupLink>Sign up</SignupLink></Link>
+                    </div>
                 ) :
                 (
                     <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
