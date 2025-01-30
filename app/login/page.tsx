@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation"
 import axios from "axios";
@@ -8,6 +7,16 @@ import { LoginContext } from "../LoginContext";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useSearchParams } from "next/navigation";
+import styled from "styled-components";
+
+const Hero = styled.div`
+  height: 88vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ebe8d8;
+  color: #000;
+`
 
 const LoginPage: React.FC = () => {
     const router = useRouter();
@@ -56,31 +65,28 @@ const LoginPage: React.FC = () => {
       }, [searchParams]);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <ToastContainer />
-        <h1>{loading ? "Processing" : "Login"}</h1>
-        <hr />
-        
-        <label htmlFor="email">email</label>
-        <input 
-            id="email"
-            type="text"
-            value={user.email}
-            onChange={(e) => setUser({...user, email: e.target.value})}
-            placeholder="email"
-            />
-        <label htmlFor="password">password</label>
-        <input 
-            id="password"
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({...user, password: e.target.value})}
-            placeholder="password"
-            />
-            <button
-            onClick={onLogin}>Login</button>
-            <Link href="/signup">Visit signup page</Link>
-        </div>
+        <Hero>
+            <ToastContainer />
+            <h1>{loading ? "Processing" : "Login"}</h1>
+            
+            <label htmlFor="email">Email</label>
+            <input 
+                id="email"
+                type="text"
+                value={user.email}
+                onChange={(e) => setUser({...user, email: e.target.value})}
+                placeholder="email"
+                />
+            <label htmlFor="password">Password</label>
+            <input 
+                id="password"
+                type="password"
+                value={user.password}
+                onChange={(e) => setUser({...user, password: e.target.value})}
+                placeholder="password"
+                />
+            <button onClick={onLogin}>Login</button>
+        </Hero>
     )
 }
 
