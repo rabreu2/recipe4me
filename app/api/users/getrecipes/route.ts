@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const {query} = reqBody;
         const queryParam = `?apiKey=${API_KEY}&query=${query}&number=10&instructionsRequired=true`;
+        
         const response = await fetch(`${API_URL}${queryParam}`);
 
         if (!response.ok) throw new Error("Failed to fetch data");

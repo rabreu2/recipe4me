@@ -3,7 +3,7 @@ import styled from "styled-components";
 import read from "../form-action";
 
 const Hero = styled.div`
-  height: 88vh;
+   88vh;
   display: flex;
   justify-content: center;
   align-items: center;

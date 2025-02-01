@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 
 const Hero = styled.div`
-  height: 88vh;
+  min-height: 88vh;
   display: flex;
   justify-content: center;
   align-items: center;

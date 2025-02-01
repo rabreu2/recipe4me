@@ -9,7 +9,7 @@ import React, { useState } from "react";
 
 
 const Hero = styled.div`
-  height: 88vh;
+  min-height: 88vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +33,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [recipe, setRecipe] = React.useState({
+  const [recipe, setRecipe] = useState({
         query: ""
   });
 
@@ -51,12 +51,10 @@ export default function Home() {
 
       const response = await axios.post('/api/users/getrecipes', recipe);
 
-      console.log("response: " + JSON.stringify(response.data.data.results.length));
-
-
       if (!response.data.data || response.data.data.results.length === 0) throw new Error("No results found");
 
-      localStorage.setItem("recipes", JSON.stringify(response.data.data.results));
+      localStorage.setItem("recipes", JSON.stringify(response.data.data));
+      localStorage.setItem("query", recipe.query);
       router.push("/recipes");
     } catch (error:any) {
         setError("Failed to fetch recipes. Please try again.");
@@ -85,7 +83,7 @@ export default function Home() {
               id="recipe" />
             <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           </div>
-          <button className="hidden" type="submit" disabled={loading}>{loading ? "Loading..." : "Fetch Posts"}</button>
+          <button className="hidden" type="submit" disabled={loading}>{loading ? "Loading..." : "Fetch Recipes"}</button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </RecipeForm>
       </Content>
