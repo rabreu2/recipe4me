@@ -40,6 +40,7 @@ const Recipes = () => {
         const returnedRecipes = localStorage.getItem("recipes");
         if (returnedRecipes) {
             setRecipes(JSON.parse(returnedRecipes).results);
+            console.log(recipes);
             setRecipeNumber(JSON.parse(returnedRecipes).totalResults);
           }
     }, []);
@@ -75,8 +76,8 @@ const Recipes = () => {
             ) : (
                     <ResultBox>
                         {recipes.map((recipe) => (
-                            <ListBox>
-                                <li key={recipe.id}>{recipe.title}</li>
+                            <ListBox key={recipe.id}>
+                                <li>{recipe.title}</li>
                             </ListBox>
                         ))}
                     </ResultBox>
