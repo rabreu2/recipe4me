@@ -1,6 +1,5 @@
 'use client'
 import styled from "styled-components";
-import read from "../form-action";
 
 const Hero = styled.div`
    88vh;
@@ -14,10 +13,7 @@ export default function SavedRecipes() {
   
   return (
     <Hero>
-      <form action={read}>
-        <input type="text" placeholder="Input a dish (e.g. Meatloaf)" name="recipe" />
-        <button type="submit">Submit</button>
-      </form>    
+   
     </Hero>
   );
 }
