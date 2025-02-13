@@ -5,6 +5,9 @@ import styled from "styled-components";
 import ReactPaginate from 'react-paginate';
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import img from "@/public/cutlery-image.jpg"
+import ImageWithFallback from "@/src/helper/imageWithFallback";
+import { ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 
 const Hero = styled.div`
     min-height: 88vh;
@@ -12,24 +15,49 @@ const Hero = styled.div`
     color: #000;
     justify-content: center;
     align-items: center;
-    overflow: auto;
 `
 
 const ResultBox = styled.ul`
     justify-content: center;
     align-items: center;
     display: grid;
-    margin-top: 45px;
+    margin-top: 30px;
+    min-width: 1045px;
 `
 
 const ListBox = styled.div`
+    display: flex;
     height: 15vh;
     width: 75vw;
-    min-width: 50rem;
+    max-width: 1720px;
+    min-width: 65rem;
+    min-height: 13rem;
     background: #d3d1c5;
     margin-top: 15px;
+    padding: 15px;
     border-radius: 0.5rem;
 `
+
+const RecipeTitle = styled.h1`
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 3.5rem;
+    font-weight: 600;
+`
+
+const RecipeName = styled.li`
+    margin-left: 15px;
+    margin-bottom: 2px;
+    font-size: max(1.6rem, min(5vw, 1.6rem));
+    font-weight: 600;
+`
+const RecipeExtras = styled.li`
+    margin-left: 15px;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
+    display: flex;
+`
+
 
 const Recipes = () => {
     const router = useRouter();
@@ -75,9 +103,30 @@ const Recipes = () => {
                 <p>No recipes available</p>
             ) : (
                     <ResultBox>
+                        <RecipeTitle>Recipes</RecipeTitle>
                         {recipes.map((recipe) => (
                             <ListBox key={recipe.id}>
-                                <li>{recipe.title}</li>
+                            <ImageWithFallback src={recipe.image}
+                                alt="Recipe Image"
+                                width={200}
+                                height={200}
+                                fallbackSrc={img}/>
+                            <div className="mt-3">
+                                <RecipeName>{recipe.title}</RecipeName>
+                                <RecipeExtras>
+                                    <ClockIcon className="w-4 h-4"/>&nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;<UserIcon className="w-4 h-4"/>&nbsp;{recipe.servings}
+                                </RecipeExtras>
+                                <div dangerouslySetInnerHTML={{ __html: recipe.summary.replace(/(<([^>]+)>)/ig,"") }} style={{ 
+                                    overflow: 'hidden',
+                                    marginLeft: '15px',
+                                    textOverflow: 'ellipsis', 
+                                    fontSize: '1rem',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 3,
+                                    WebkitBoxOrient: 'vertical',
+                                    lineHeight: '1.5em'
+                                    }}/>
+                            </div>     
                             </ListBox>
                         ))}
                     </ResultBox>
@@ -90,15 +139,15 @@ const Recipes = () => {
                         pageCount={Math.ceil(recipeNumber/10)}
                         pageRangeDisplayed={5}
                         className="flex"
-                        pageClassName="text-black hover:bg-stone-300 mx-1 my-0 border border-black"
+                        pageClassName="text-black hover:bg-[#c9c7b9] mx-1 my-0 border border-black"
                         pageLinkClassName="float-left px-4 py-2"
                         breakClassName="font-bold text-black mx-1 my-0"
                         breakLinkClassName="float-left px-4 py-2"
-                        previousClassName="text-black border border-black mx-1 my-0 hover:bg-stone-300"
+                        previousClassName="text-black border border-black mx-1 my-0 hover:bg-[#c9c7b9]"
                         previousLinkClassName="float-left px-4 py-2"
-                        nextClassName="text-black border border-black mx-1 my-0 hover:bg-stone-300"
+                        nextClassName="text-black border border-black mx-1 my-0 hover:bg-[#c9c7b9]"
                         nextLinkClassName="float-left px-4 py-2"
-                        activeClassName="bg-stone-300"
+                        activeClassName="bg-[#c9c7b9]"
                         breakLabel="..."
                         nextLabel="&raquo;"
                         previousLabel="&laquo;"

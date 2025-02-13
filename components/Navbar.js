@@ -11,7 +11,10 @@ import { LoginContext } from "@/app/LoginContext";
 
 const Nav = styled.nav`
     height: 7vh;
+    min-height: 70px;
     background: #c9c7b9;
+    position:sticky;
+    top: 0;
     `;
 
 const NavbarLogo = styled.a`

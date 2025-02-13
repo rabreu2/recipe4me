@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const {query} = reqBody;
-        const queryParam = `?apiKey=${API_KEY}&query=${query}&number=10&instructionsRequired=true`;
+        const queryParam = `?apiKey=${API_KEY}&query=${query}&number=10&instructionsRequired=true&addRecipeInformation=true`;
         
         const response = await fetch(`${API_URL}${queryParam}`);
 
