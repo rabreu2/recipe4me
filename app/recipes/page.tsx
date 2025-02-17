@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import img from "@/public/cutlery-image.jpg"
 import ImageWithFallback from "@/src/helper/imageWithFallback";
 import { ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import RecipeForm from "@/components/RecipeForm";
 
 const Hero = styled.div`
     min-height: 88vh;
@@ -38,12 +40,6 @@ const ListBox = styled.div`
     border-radius: 0.5rem;
 `
 
-const RecipeTitle = styled.h1`
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-size: 3.5rem;
-    font-weight: 600;
-`
 
 const RecipeName = styled.li`
     margin-left: 15px;
@@ -68,12 +64,12 @@ const Recipes = () => {
         const returnedRecipes = localStorage.getItem("recipes");
         if (returnedRecipes) {
             setRecipes(JSON.parse(returnedRecipes).results);
-            console.log(recipes);
+            console.log(recipes.toString);
             setRecipeNumber(JSON.parse(returnedRecipes).totalResults);
-          }
+        }
     }, []);
 
-    const loadRecipesFromServer = async (offset:number) => {
+    const loadRecipesFromServer = async (offset: number) => {
         try {
             const recipe = {
                 query: localStorage.getItem("query") + `&offset=${offset}`
@@ -84,16 +80,16 @@ const Recipes = () => {
 
             setRecipes(response.data.data.results);
             router.push("/recipes");
-        } catch (error:any) {
-            console.error(error);    
-        } 
+        } catch (error: any) {
+            console.error(error);
+        }
     }
 
-    const handlePageClick = async (event:any) => {
+    const handlePageClick = async (event: any) => {
         const newOffset = (event.selected) * 10;
         console.log(
             `User requested page number ${event.selected}, which is offset ${newOffset}`
-          );
+        );
         await loadRecipesFromServer(newOffset);
     }
 
@@ -102,41 +98,49 @@ const Recipes = () => {
             {recipes.length === 0 ? (
                 <p>No recipes available</p>
             ) : (
-                    <ResultBox>
-                        <RecipeTitle>Recipes</RecipeTitle>
-                        {recipes.map((recipe) => (
-                            <ListBox key={recipe.id}>
-                            <ImageWithFallback src={recipe.image}
-                                alt="Recipe Image"
-                                width={200}
-                                height={200}
-                                fallbackSrc={img}/>
+                <ResultBox>
+                    <RecipeForm setRecipes={setRecipes} className="w-full my-[30px]" />
+                    {recipes.map((recipe) => (
+                        <ListBox className='hover:bg-[#c9c7b9]' key={recipe.id}>
+                            <Link className='contents' href={{
+                                pathname: '/recipe',
+                                query: { id: recipe.id }
+                            }}>
+                                <ImageWithFallback src={recipe.image}
+                                    alt="Recipe Image"
+                                    width={200}
+                                    height={200}
+                                    fallbackSrc={img}
+                                />
+                            </Link>
                             <div className="mt-3">
-                                <RecipeName>{recipe.title}</RecipeName>
+                                <RecipeName>
+                                    <Link className='hover:underline' href={`/recipe/${recipe.id}`} passHref>{recipe.title}</Link>
+                                </RecipeName>
                                 <RecipeExtras>
-                                    <ClockIcon className="w-4 h-4"/>&nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;<UserIcon className="w-4 h-4"/>&nbsp;{recipe.servings}
+                                    <ClockIcon className="w-4 h-4" />&nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;<UserIcon className="w-4 h-4" />&nbsp;{recipe.servings}
                                 </RecipeExtras>
-                                <div dangerouslySetInnerHTML={{ __html: recipe.summary.replace(/(<([^>]+)>)/ig,"") }} style={{ 
+                                <div dangerouslySetInnerHTML={{ __html: recipe.summary.replace(/(<([^>]+)>)/ig, "") }} style={{
                                     overflow: 'hidden',
                                     marginLeft: '15px',
-                                    textOverflow: 'ellipsis', 
+                                    textOverflow: 'ellipsis',
                                     fontSize: '1rem',
                                     display: '-webkit-box',
                                     WebkitLineClamp: 3,
                                     WebkitBoxOrient: 'vertical',
                                     lineHeight: '1.5em'
-                                    }}/>
-                            </div>     
-                            </ListBox>
-                        ))}
-                    </ResultBox>
+                                }} />
+                            </div>
+                        </ListBox>
+                    ))}
+                </ResultBox>
             )}
             {recipeNumber === 0 ? (
-                <p/>
+                <p />
             ) : (
                 <div className="flex w-full justify-center text-center px-0 py-[45px]">
-                    <ReactPaginate 
-                        pageCount={Math.ceil(recipeNumber/10)}
+                    <ReactPaginate
+                        pageCount={Math.ceil(recipeNumber / 10)}
                         pageRangeDisplayed={5}
                         className="flex"
                         pageClassName="text-black hover:bg-[#c9c7b9] mx-1 my-0 border border-black"

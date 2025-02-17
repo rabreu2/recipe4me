@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
 import { PowerIcon } from '@heroicons/react/24/outline';
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useContext } from "react";
 import { LoginContext } from "@/app/LoginContext";
@@ -15,6 +15,7 @@ const Nav = styled.nav`
     background: #c9c7b9;
     position:sticky;
     top: 0;
+    z-index: 10;
     `;
 
 const NavbarLogo = styled.a`
@@ -70,9 +71,9 @@ const NavRight = styled.div`
     padding-right: 1rem;
 `;
 
-const Navbar =  () => {
+const Navbar = () => {
     const router = useRouter();
-    const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
     const logout = async () => {
         try {
@@ -89,11 +90,11 @@ const Navbar =  () => {
                 <Link href={"/"}>
                     <NavbarLogo>
                         <Image
-                        priority={true}
-                        src={logo}
-                        width={75}
-                        height={45}
-                        alt="Recipe4Me Logo"
+                            priority={true}
+                            src={logo}
+                            width={75}
+                            height={45}
+                            alt="Recipe4Me Logo"
                         />
                     </NavbarLogo>
                 </Link>
@@ -105,15 +106,15 @@ const Navbar =  () => {
                         <Link href={"/signup"}><SignupLink>Sign up</SignupLink></Link>
                     </div>
                 ) :
-                (
-                    <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                        <PowerIcon className="w-6" />
-                        <div className="hidden md:block">Sign Out</div>
-                    </button>
-                )}
+                    (
+                        <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+                            <PowerIcon className="w-6" />
+                            <div className="hidden md:block">Sign Out</div>
+                        </button>
+                    )}
             </NavRight>
         </Nav>
-    ) 
+    )
 }
 
 export default Navbar;

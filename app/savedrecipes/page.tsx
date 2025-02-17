@@ -2,7 +2,6 @@
 import styled from "styled-components";
 
 const Hero = styled.div`
-   88vh;
   display: flex;
   justify-content: center;
   align-items: center;
