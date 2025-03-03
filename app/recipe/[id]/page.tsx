@@ -163,7 +163,7 @@ function Recipe({ params }: { params: { id: string } }) {
         getRecipe();
 
         return () => controller.abort();
-    }, []);
+    }, [params.id]);
 
     console.log(recipe);
 
@@ -198,7 +198,7 @@ function Recipe({ params }: { params: { id: string } }) {
                 <Ingredients>Ingredients</Ingredients>
                 <IngredientsList>
                     {recipe.extendedIngredients.map((ingredient) => (
-                        <IngredientLabel className="group">{ingredient.original.replace(/^(.)/, (match) => match.toUpperCase())}
+                        <IngredientLabel key={ingredient.id} className="group">{ingredient.original.replace(/^(.)/, (match) => match.toUpperCase())}
                             <Ingredient className="peer" type="checkbox" id={ingredient.id.toString()} name={ingredient.id.toString()} />
                             <Checkmark className="group-hover:bg-[#c9c7b9] peer-checked:bg-[#22b14c]"></Checkmark>
                             <svg

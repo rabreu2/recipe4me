@@ -109,8 +109,8 @@ const Recipes = () => {
                 <ResultBox>
                     <RecipeForm setRecipes={setRecipes} className="w-full my-[30px]" />
                     {recipes.map((recipe) => (
-                        <Link className='group contents' href={`/recipe/${recipe.id}`} passHref>
-                            <ListBox className='hover:bg-[#c9c7b9]' key={recipe.id}>
+                        <Link key={recipe.id} className='group contents' href={`/recipe/${recipe.id}`} passHref>
+                            <ListBox className='hover:bg-[#c9c7b9]'>
                                 <ImageWithFallback src={recipe.image}
                                     alt="Recipe Image"
                                     width={200}
