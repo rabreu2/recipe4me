@@ -163,7 +163,7 @@ function Recipe({ params }: { params: { id: string } }) {
         getRecipe();
 
         return () => controller.abort();
-    }, [params.id]);
+    }, []);
 
     console.log(recipe);
 
