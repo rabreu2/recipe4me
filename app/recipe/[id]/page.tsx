@@ -220,7 +220,7 @@ function Recipe({ params }: { params: { id: string } }) {
                 <InstructionBox>
                     <InstructionsList>
                         {recipe.analyzedInstructions.at(0)?.steps.map((instruction) => (
-                            <Instruction>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
+                            <Instruction  key={instruction.number}>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
                         ))}
                     </InstructionsList>
                 </InstructionBox>
