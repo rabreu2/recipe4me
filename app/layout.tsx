@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import { AuthProvider } from "./LoginContext";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // g4me green : #22b14c 
 // g4me dgreen : #187e37
@@ -41,6 +42,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar></Navbar>
             {children}
+            <SpeedInsights />
             <Footer></Footer>
         </AuthProvider>
       </body>
