@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
-import { PowerIcon } from '@heroicons/react/24/outline';
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useContext } from "react";
