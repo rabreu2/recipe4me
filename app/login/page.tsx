@@ -20,7 +20,7 @@ const Hero = styled.div`
   color: #000;
 `
 
-const RecipeName = styled.h1`
+const RecipeLogo = styled.h1`
     margin: 2rem 0;
     font-size: 2.3rem;
     font-weight: 600;
@@ -80,13 +80,13 @@ const LoginPage: React.FC = () => {
     <Hero>
       <ToastContainer />
       <div className="grid">
-        <RecipeName>{loading ? "Processing" : ""}<Image
+        <RecipeLogo>{loading ? "Processing" : ""}<Image
           priority={true}
           src={logo}
           width={75}
           height={45}
           alt="Recipe4Me Logo"
-        /></RecipeName>
+        /></RecipeLogo>
 
         <input
           id="email"

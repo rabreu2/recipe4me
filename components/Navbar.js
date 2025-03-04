@@ -71,6 +71,19 @@ const NavRight = styled.div`
     padding-right: 1rem;
 `;
 
+const SignoutLink = styled.button`
+    padding: 0.25rem 0.75rem; 
+    display: flex;
+    float: right;
+    position: relative;
+    color: #000;
+    border: 2px solid ${({ color }) => color || "#9c9c9c"};
+    border-radius: 20px;
+    &:hover {
+        background-color: #9c9c9c;
+    }
+`;
+
 const Navbar = () => {
     const router = useRouter();
     const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
@@ -107,10 +120,9 @@ const Navbar = () => {
                     </div>
                 ) :
                     (
-                        <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                            <PowerIcon className="w-6" />
-                            <div className="hidden md:block">Sign Out</div>
-                        </button>
+                        <SignoutLink onClick={logout}>
+                            Sign Out
+                        </SignoutLink>
                     )}
             </NavRight>
         </Nav>
