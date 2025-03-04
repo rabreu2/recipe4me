@@ -7,10 +7,12 @@ import axios from "axios";
 
 interface SearchFormProps {
     setRecipes?: (recipes: { name: string }[]) => void;
+    setRecipeNumber?: (number: number) => void;
+    setPage?: (number: number) => void;
     className?: string;
 }
 
-export default function RecipeForm({ setRecipes, className }: SearchFormProps) {
+export default function RecipeForm({ setRecipes, setRecipeNumber, setPage, className }: SearchFormProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,14 @@ export default function RecipeForm({ setRecipes, className }: SearchFormProps) {
 
             if (setRecipes) {
                 setRecipes(response.data.data.results);
+            }
+
+            if (setRecipeNumber) {
+                setRecipeNumber(response.data.data.totalResults);
+            }
+
+            if (setPage) {
+                setPage(1);
             }
 
             localStorage.setItem("recipes", JSON.stringify(response.data.data));

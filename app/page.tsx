@@ -30,7 +30,7 @@ export default function Home() {
           src={recipe4me}
           alt="Recipe4Me"
         />
-        <RecipeForm className="w-full max-w-[583px] min-w-[250px] mt-2.5" setRecipes={undefined} />
+        <RecipeForm className="w-full max-w-[583px] min-w-[250px] mt-2.5" setPage={undefined} setRecipes={undefined} setRecipeNumber={undefined} />
       </Content>
     </Hero>
   );

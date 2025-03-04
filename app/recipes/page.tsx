@@ -57,6 +57,7 @@ const Recipes = () => {
     const router = useRouter();
     const [recipes, setRecipes] = useState<any[]>([]);
     const [recipeNumber, setRecipeNumber] = useState<any>();
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
         const returnedRecipes = localStorage.getItem("recipes");
@@ -72,11 +73,13 @@ const Recipes = () => {
                 query: localStorage.getItem("query") + `&offset=${offset}`
             }
             const response = await axios.post('/api/users/getrecipes', recipe);
-            localStorage.removeItem("recipes");
-            localStorage.setItem("recipes", JSON.stringify(response.data.data));
 
             setRecipes(response.data.data.results);
             setRecipeNumber(response.data.data.totalResults);
+
+            localStorage.removeItem("recipes");
+            localStorage.setItem("recipes", JSON.stringify(response.data.data));
+
             router.push("/recipes");
         } catch (error: any) {
             console.error(error);
@@ -85,9 +88,12 @@ const Recipes = () => {
 
     const handlePageClick = async (event: any) => {
         const newOffset = (event.selected) * 10;
+        const newPage = event.selected + 1;
+
         console.log(
             `User requested page number ${event.selected}, which is offset ${newOffset}`
         );
+        setPage(newPage);
         await loadRecipesFromServer(newOffset);
     }
 
@@ -107,7 +113,7 @@ const Recipes = () => {
                 <p>No recipes available</p>
             ) : (
                 <ResultBox>
-                    <RecipeForm setRecipes={setRecipes} className="w-full my-[30px]" />
+                    <RecipeForm setPage={setPage} setRecipeNumber={setRecipeNumber} setRecipes={setRecipes} className="w-full my-[30px]" />
                     {recipes.map((recipe) => (
                         <Link key={recipe.id} className='group contents' href={`/recipe/${recipe.id}`} passHref>
                             <ListBox className='hover:bg-[#c9c7b9]'>
@@ -162,6 +168,7 @@ const Recipes = () => {
                         previousLabel="&laquo;"
                         renderOnZeroPageCount={null}
                         onPageChange={handlePageClick}
+                        forcePage={page - 1}
                     />
                 </div>
             )}
