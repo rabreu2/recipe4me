@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import { AuthProvider } from "./LoginContext";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // g4me green : #22b14c 
 // g4me dgreen : #187e37
@@ -36,11 +37,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`min-h-screen min-w-[1060px] flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider>
           <Navbar></Navbar>
             {children}
+            <SpeedInsights />
             <Footer></Footer>
         </AuthProvider>
       </body>

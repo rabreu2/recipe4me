@@ -6,8 +6,8 @@ export async function POST(request: NextRequest) {
 
     try {
         const reqBody = await request.json();
-        const { query } = reqBody;
-        const queryParam = `/recipes/complexSearch?apiKey=${API_KEY}&query=${query}&number=10&instructionsRequired=true&addRecipeInformation=true`;
+        const { id } = reqBody;
+        const queryParam = `/recipes/${id}/information?apiKey=${API_KEY}`;
 
         const response = await fetch(`${API_URL}${queryParam}`);
 
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
         const data = await response.json();
         return NextResponse.json({
-            message: "Recipes found",
+            message: "Recipe found",
             data: data
         })
     } catch (error: any) {

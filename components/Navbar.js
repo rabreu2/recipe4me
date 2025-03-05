@@ -3,15 +3,18 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/grocery4me-icon.png";
-import { PowerIcon } from '@heroicons/react/24/outline';
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useContext } from "react";
 import { LoginContext } from "@/app/LoginContext";
 
 const Nav = styled.nav`
     height: 7vh;
+    min-height: 70px;
     background: #c9c7b9;
+    position:sticky;
+    top: 0;
+    z-index: 10;
     `;
 
 const NavbarLogo = styled.a`
@@ -67,15 +70,28 @@ const NavRight = styled.div`
     padding-right: 1rem;
 `;
 
-const Navbar =  () => {
+const SignoutLink = styled.button`
+    padding: 0.25rem 0.75rem; 
+    display: flex;
+    float: right;
+    position: relative;
+    color: #000;
+    border: 2px solid ${({ color }) => color || "#9c9c9c"};
+    border-radius: 20px;
+    &:hover {
+        background-color: #9c9c9c;
+    }
+`;
+
+const Navbar = () => {
     const router = useRouter();
-    const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
     const logout = async () => {
         try {
             await axios.get('/api/users/logout');
             setIsLoggedIn(false);
-            router.push('/login')
+            router.push('/')
         } catch (error) {
             console.log(error.message)
         }
@@ -86,11 +102,11 @@ const Navbar =  () => {
                 <Link href={"/"}>
                     <NavbarLogo>
                         <Image
-                        priority={true}
-                        src={logo}
-                        width={75}
-                        height={45}
-                        alt="Recipe4Me Logo"
+                            priority={true}
+                            src={logo}
+                            width={75}
+                            height={45}
+                            alt="Recipe4Me Logo"
                         />
                     </NavbarLogo>
                 </Link>
@@ -102,15 +118,14 @@ const Navbar =  () => {
                         <Link href={"/signup"}><SignupLink>Sign up</SignupLink></Link>
                     </div>
                 ) :
-                (
-                    <button onClick={logout} className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                        <PowerIcon className="w-6" />
-                        <div className="hidden md:block">Sign Out</div>
-                    </button>
-                )}
+                    (
+                        <SignoutLink onClick={logout}>
+                            Sign Out
+                        </SignoutLink>
+                    )}
             </NavRight>
         </Nav>
-    ) 
+    )
 }
 
 export default Navbar;
