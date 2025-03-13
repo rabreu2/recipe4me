@@ -32,6 +32,7 @@ const SignupLink = styled.a`
     border: 2px solid ${({ color }) => color || "#9c9c9c"};
     border-radius: 20px;
     background-color: #9c9c9c;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     &:hover {
         background-color: #737373;
         border-color: #737373;
@@ -47,6 +48,7 @@ const LoginLink = styled.a`
     color: #000;
     border: 2px solid ${({ color }) => color || "#9c9c9c"};
     border-radius: 20px;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     &:hover {
         background-color: #9c9c9c;
     }
@@ -78,6 +80,7 @@ const SignoutLink = styled.button`
     color: #000;
     border: 2px solid ${({ color }) => color || "#9c9c9c"};
     border-radius: 20px;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     &:hover {
         background-color: #9c9c9c;
     }

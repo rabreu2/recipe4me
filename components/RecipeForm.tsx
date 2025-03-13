@@ -66,7 +66,7 @@ export default function RecipeForm({ setRecipes, setRecipeNumber, setPage, class
                 <input
                     type="text"
                     placeholder="Search for a recipe (e.g. Meatloaf)"
-                    className="w-full pl-10 pr-4 py-2 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100"
+                    className="w-full pl-10 pr-4 py-2 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600  transition-colors duration-300 ease-in-out hover:bg-gray-100"
                     value={recipe.query}
                     onChange={(e) => setRecipe({ ...recipe, query: e.target.value })}
                     id="recipe" />

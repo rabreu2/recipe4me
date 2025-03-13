@@ -116,7 +116,7 @@ const Recipes = () => {
                     <RecipeForm setPage={setPage} setRecipeNumber={setRecipeNumber} setRecipes={setRecipes} className="w-full my-[30px]" />
                     {recipes.map((recipe) => (
                         <Link key={recipe.id} className='group contents' href={`/recipe/${recipe.id}`} passHref>
-                            <ListBox className='hover:bg-[#c9c7b9]'>
+                            <ListBox className='transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]'>
                                 <ImageWithFallback src={recipe.image}
                                     alt="Recipe Image"
                                     width={200}
@@ -124,7 +124,7 @@ const Recipes = () => {
                                     fallbackSrc={img}
                                 />
                                 <div className="mt-3">
-                                    <RecipeName className="group-hover:underline">
+                                    <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline">
                                         {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
                                     </RecipeName>
                                     <RecipeExtras>
@@ -154,13 +154,13 @@ const Recipes = () => {
                         pageCount={Math.ceil(recipeNumber / 10)}
                         pageRangeDisplayed={5}
                         className="flex"
-                        pageClassName="text-black hover:bg-[#c9c7b9] mx-1 my-0 border border-black"
+                        pageClassName="text-black transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] mx-1 my-0 border border-black"
                         pageLinkClassName="float-left px-4 py-2"
                         breakClassName="font-bold text-black mx-1 my-0"
                         breakLinkClassName="float-left px-4 py-2"
-                        previousClassName="text-black border border-black mx-1 my-0 hover:bg-[#c9c7b9]"
+                        previousClassName="text-black border border-black mx-1 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
                         previousLinkClassName="float-left px-4 py-2"
-                        nextClassName="text-black border border-black mx-1 my-0 hover:bg-[#c9c7b9]"
+                        nextClassName="text-black border border-black mx-1 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
                         nextLinkClassName="float-left px-4 py-2"
                         activeClassName="bg-[#c9c7b9]"
                         breakLabel="..."

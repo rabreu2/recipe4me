@@ -200,7 +200,7 @@ function Recipe({ params }: { params: { id: string } }) {
                     {recipe.extendedIngredients.map((ingredient) => (
                         <IngredientLabel key={ingredient.id} className="group">{ingredient.original.replace(/^(.)/, (match) => match.toUpperCase())}
                             <Ingredient className="peer" type="checkbox" id={ingredient.id.toString()} name={ingredient.id.toString()} />
-                            <Checkmark className="group-hover:bg-[#c9c7b9] peer-checked:bg-[#22b14c]"></Checkmark>
+                            <Checkmark className="group-hover:bg-[#c9c7b9] peer-checked:bg-[#22b14c] transition-colors duration-300 ease-in-out"></Checkmark>
                             <svg
                                 className="absolute w-4 h-4 mt-1 hidden peer-checked:block pointer-events-none top-[4px] left-[5px]"
                                 xmlns="http://www.w3.org/2000/svg"
