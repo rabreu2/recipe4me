@@ -51,7 +51,7 @@ export default function VerifyEmailPage() {
             /></div>
             <h1 className="text-4xl mb-5">Email Verification</h1>
             {token ? `` : <h2 className="p-2 bg-[#22b14c] text-black">
-                No token provided, please check your email
+                No token provided, please check your email.
             </h2>}
 
 
