@@ -8,7 +8,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 
 const Hero = styled.div`
-  min-height: 88vh;
+  min-height: 81.6vh;
   display: flex;
   justify-content: center;
   align-items: center;

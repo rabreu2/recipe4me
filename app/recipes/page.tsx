@@ -12,7 +12,7 @@ import Link from "next/link";
 import RecipeForm from "@/components/RecipeForm";
 
 const Hero = styled.div`
-    min-height: 88vh;
+    min-height: 81.6vh;
     background: #ebe8d8;
     color: #000;
     justify-content: center;
