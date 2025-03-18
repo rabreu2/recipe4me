@@ -34,7 +34,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         const mailOptions = {
             from: 'Recipe4Me <ray@rayabreu.com>',
             to: email,
-            subject: emailType === "VERIFY" ? "Recipe4Me | Email Verification" : "Reset your password",
+            subject: emailType === "VERIFY" ? "Recipe4Me | Email Verification" : "Recipe4Me | Password Reset",
             html: `<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="background:#ebe8d8; color:#000; min-height:68vh; text-align: center;">
                         <tr>
                         <td align="center" valign="middle">
@@ -43,7 +43,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
                             <p style="margin-top: 10px; font-size: 1.2rem;">
                             Click the button below to ${emailType === "VERIFY" ? "verify your email." : "reset your password."}
                             </p>
-                            <a href="${process.env.NEXT_PUBLIC_DOMAIN}/verifyemail?token=${hashedToken}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">
+                            ${emailType === "VERIFY" ? `<a href="${process.env.NEXT_PUBLIC_DOMAIN}/verifyemail?token=${hashedToken}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">` : `<a href="${process.env.NEXT_PUBLIC_DOMAIN}/resetpassword?token=${hashedToken}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">`}
+                            
                             ${emailType === "VERIFY" ? "Verify Email" : "Reset Password"}
                             </a>
                         </div>

@@ -8,7 +8,7 @@ import img from "@/public/cutlery-image.jpg"
 import { ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 
 const Hero = styled.div`
-    min-height: 88vh;
+    min-height: 81.6vh;
     background: #ebe8d8;
     color: #000;
     justify-content: center;

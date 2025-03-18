@@ -12,16 +12,20 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     password: {
-       type: String,
-       required: [true, "Please provide a password"],
+        type: String,
+        required: [true, "Please provide a password"],
     },
     isVerified: {
-       type: Boolean,
-       default: false,
+        type: Boolean,
+        default: false,
     },
     isAdmin: {
         type: Boolean,
         default: false,
+    },
+    savedRecipes: {
+        type: [Number],
+        default: [],
     },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,

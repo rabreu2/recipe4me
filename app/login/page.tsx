@@ -10,9 +10,10 @@ import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import logo from "../../public/grocery4me-icon.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = styled.div`
-  min-height: 88vh;
+  min-height: 81.6vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,6 +118,8 @@ const LoginPage: React.FC = () => {
           <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">
             Password<span className="text-red-500">*</span>
           </label>
+
+          <Link href={`/passwordreset`} className="w-fit hover:underline text-sm mb-1 transform -translate-y-[15px]">Forgot Password?</Link>
 
           <button
             type="submit"

@@ -7,7 +7,7 @@ import RecipeForm from "@/components/RecipeForm";
 
 
 const Hero = styled.div`
-  min-height: 88vh;
+  min-height: 81.6vh;
   display: flex;
   justify-content: center;
   align-items: center;

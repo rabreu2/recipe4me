@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactPaginate from 'react-paginate';
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import img from "@/public/cutlery-image.jpg"
 import ImageWithFallback from "@/src/helper/imageWithFallback";
-import { ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import RecipeForm from "@/components/RecipeForm";
+import { LoginContext } from "@/app/LoginContext";
 
 const Hero = styled.div`
-    min-height: 88vh;
+    min-height: 81.6vh;
     background: #ebe8d8;
     color: #000;
     justify-content: center;
@@ -58,6 +60,10 @@ const Recipes = () => {
     const [recipes, setRecipes] = useState<any[]>([]);
     const [recipeNumber, setRecipeNumber] = useState<any>();
     const [page, setPage] = useState(1)
+    const [user, setUser] = useState<any>();
+    const [savedRecipes, setSavedRecipes] = useState<{ [key: string]: boolean }>({});
+    const { isLoggedIn } = useContext(LoginContext)!;
+
 
     useEffect(() => {
         const returnedRecipes = localStorage.getItem("recipes");
@@ -90,9 +96,6 @@ const Recipes = () => {
         const newOffset = (event.selected) * 10;
         const newPage = event.selected + 1;
 
-        console.log(
-            `User requested page number ${event.selected}, which is offset ${newOffset}`
-        );
         setPage(newPage);
         await loadRecipesFromServer(newOffset);
     }
@@ -107,6 +110,28 @@ const Recipes = () => {
         });
     };
 
+    const onSaveRecipe = async (recipeId: number) => {
+        try {
+            const res = await axios.get('/api/users/me');
+            if (!res.data.data) {
+                throw new Error("Cannot save recipe, user not found");
+            }
+            setUser(res.data.data);
+
+            const recipePayload = {
+                user: user,
+                recipeId: recipeId,
+            };
+            await axios.post("/api/users/saverecipe", recipePayload);
+            setSavedRecipes((prevState) => ({
+                ...prevState,
+                [recipeId]: !prevState[recipeId],
+            }));
+        } catch (error: any) {
+            console.log("Failed to save recipe:", error.message);
+        }
+    }
+
     return (
         <Hero>
             {recipes.length === 0 ? (
@@ -115,35 +140,72 @@ const Recipes = () => {
                 <ResultBox>
                     <RecipeForm setPage={setPage} setRecipeNumber={setRecipeNumber} setRecipes={setRecipes} className="w-full my-[30px]" />
                     {recipes.map((recipe) => (
-                        <Link key={recipe.id} className='group contents' href={`/recipe/${recipe.id}`} passHref>
-                            <ListBox className='transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]'>
-                                <ImageWithFallback src={recipe.image}
-                                    alt="Recipe Image"
-                                    width={200}
-                                    height={200}
-                                    fallbackSrc={img}
-                                />
-                                <div className="mt-3">
-                                    <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline">
-                                        {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
-                                    </RecipeName>
-                                    <RecipeExtras>
-                                        <ClockIcon className="w-4 h-4" />&nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;<UserIcon className="w-4 h-4" />&nbsp;{recipe.servings}
-                                    </RecipeExtras>
-                                    <div dangerouslySetInnerHTML={{ __html: recipe.summary.replace(/(<([^>]+)>)/ig, "").replace(/^(.)/, (match: string) => match.toUpperCase()) }} style={{
-                                        overflow: 'hidden',
-                                        marginLeft: '15px',
-                                        textOverflow: 'ellipsis',
-                                        fontSize: '1rem',
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 3,
-                                        WebkitBoxOrient: 'vertical',
-                                        lineHeight: '1.5em'
-                                    }} />
-                                </div>
-                            </ListBox>
-                        </Link>
+                        <div key={recipe.id} className="relative">
+                            <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
+                                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]">
+                                    <ImageWithFallback
+                                        src={recipe.image}
+                                        alt="Recipe Image"
+                                        width={200}
+                                        height={200}
+                                        fallbackSrc={img}
+                                    />
+                                    <div className="mt-3">
+                                        <div className="flow-root">
+                                            <div className="flex float-left relative">
+                                                <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline">
+                                                    {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
+                                                </RecipeName>
+                                            </div>
+                                        </div>
+                                        <RecipeExtras>
+                                            <ClockIcon className="w-4 h-4" />
+                                            &nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;
+                                            <UserIcon className="w-4 h-4" />
+                                            &nbsp;{recipe.servings}
+                                        </RecipeExtras>
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: recipe.summary
+                                                    .replace(/(<([^>]+)>)/gi, "")
+                                                    .replace(/^(.)/, (match: string) => match.toUpperCase()),
+                                            }}
+                                            style={{
+                                                overflow: "hidden",
+                                                marginLeft: "15px",
+                                                textOverflow: "ellipsis",
+                                                fontSize: "1rem",
+                                                display: "-webkit-box",
+                                                WebkitLineClamp: 3,
+                                                WebkitBoxOrient: "vertical",
+                                                lineHeight: "1.5em",
+                                            }}
+                                        />
+                                    </div>
+                                </ListBox>
+                            </Link>
+
+                            {isLoggedIn && (
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        onSaveRecipe(recipe.id); // Save or unsave the recipe
+                                    }}
+                                    className="absolute top-[2.7rem] right-[1rem] w-[30px] h-[30px] flex items-center justify-center"
+                                >
+                                    {/* Show solid icon if the recipe is saved */}
+                                    {savedRecipes[recipe.id] ? (
+                                        <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                                    ) : (
+                                        <BookmarkIcon className="w-full h-full text-[#000]" />
+                                    )}
+                                </button>
+                            )}
+                        </div>
                     ))}
+
+
                 </ResultBox>
             )}
             {recipeNumber === 0 ? (
