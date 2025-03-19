@@ -7,8 +7,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import img from "@/public/cutlery-image.jpg"
-import ReactPaginate from "react-paginate";
-
 
 const Hero = styled.div`
     min-height: 81.6vh;
