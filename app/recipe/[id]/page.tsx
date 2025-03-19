@@ -224,6 +224,11 @@ function Recipe({ params }: { params: { id: string } }) {
     <Hero>
         <div>Recipe Not Found</div>
     </Hero>;
+    
+    if (!user) return
+    <Hero>
+      <div>User Not Found</div>
+    </Hero>;
 
     return (
         <Hero>
