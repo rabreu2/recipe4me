@@ -1,11 +1,13 @@
 "use client";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import ImageWithFallback from "@/src/helper/imageWithFallback";
 import img from "@/public/cutlery-image.jpg"
-import { ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import LoginContext from "@/app/LoginContext";
+import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 
 const Hero = styled.div`
     min-height: 81.6vh;
@@ -142,11 +144,35 @@ function Recipe({ params }: { params: { id: string } }) {
     };
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
+    const { isLoggedIn } = useContext(LoginContext)!;
+    const [user, setUser] = useState<any>();
+    const [isRecipeSaved, setIsRecipeSaved] = useState<boolean>(false);
 
     useEffect(() => {
         if (!params.id) return; // Prevents unnecessary API calls
 
         const controller = new AbortController();
+
+        const getUser = async () => {
+            try {
+                const res = await axios.get('/api/users/me');
+                if (!res.data.data) {
+                    throw new Error("Cannot save recipe, user not found");
+                }
+                if (res.data.data.savedRecipes.includes(id)) {
+                    setIsRecipeSaved(false);
+                } else {
+                    setIsRecipeSaved(true);
+                }
+
+                setUser(res.data.data);
+
+            } catch (error) {
+                console.error('Error fetching saved recipes:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
 
         const getRecipe = async () => {
             try {
@@ -160,9 +186,34 @@ function Recipe({ params }: { params: { id: string } }) {
         };
 
         getRecipe();
+        getUser();
 
         return () => controller.abort();
     }, [params.id]);
+
+    const onSaveRecipe = async (recipeId: number) => {
+        try {
+            const res = await axios.get('/api/users/me');
+            if (!res.data.data) {
+                throw new Error("Cannot save recipe, user not found");
+            }
+            if (res.data.data.savedRecipes.includes(recipeId)) {
+                setIsRecipeSaved(false);
+            } else {
+                setIsRecipeSaved(true);
+            }
+
+            setUser(res.data.data);
+
+            const recipePayload = {
+                user: res.data.data,
+                recipeId: recipeId,
+            };
+            await axios.post("/api/users/saverecipe", recipePayload);
+        } catch (error: any) {
+            console.log("Failed to save recipe:", error.message);
+        }
+    }
 
     if (loading) return
     <Hero>
@@ -177,7 +228,27 @@ function Recipe({ params }: { params: { id: string } }) {
     return (
         <Hero>
             <RecipeBox>
-                <RecipeName>{capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}</RecipeName>
+                <div className="relative flex items-center justify-between w-full">
+                    <RecipeName>
+                        {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
+                    </RecipeName>
+                    {isLoggedIn && (
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                onSaveRecipe(recipe.id);
+                            }}
+                            className="absolute right-0 flex items-center justify-center w-[48px] h-[48px]"
+                        >
+                            {isRecipeSaved ? (
+                                <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                            ) : (
+                                <BookmarkIcon className="w-full h-full text-[#000]" />
+                            )}
+                        </button>
+                    )}
+                </div>
                 <hr className="h-0.5 bg-[#9c9c9c] mb-10"></hr>
                 <div className="flex">
                     <ImageWithFallback src={recipe.image}
