@@ -61,7 +61,7 @@ const Recipes = () => {
     const [recipeNumber, setRecipeNumber] = useState<any>();
     const [page, setPage] = useState(1)
     const [user, setUser] = useState<any>();
-    const [savedRecipes, setSavedRecipes] = useState<{ [key: string]: boolean }>({});
+    const [savedRecipes, setSavedRecipes] = useState<any[]>([]);
     const { isLoggedIn } = useContext(LoginContext)!;
 
 
@@ -71,6 +71,20 @@ const Recipes = () => {
             setRecipes(JSON.parse(returnedRecipes).results);
             setRecipeNumber(JSON.parse(returnedRecipes).totalResults);
         }
+        const fetchSavedRecipes = async () => {
+            try {
+                const res = await axios.get('/api/users/me');
+                if (!res.data.data) {
+                    throw new Error("Cannot fetch saved recipes, user not found");
+                }
+                setUser(res.data.data);
+                setSavedRecipes(res.data.data.savedRecipes); // Convert array to Set for fast lookup
+            } catch (error) {
+                console.error('Error fetching saved recipes:', error);
+            }
+        };
+
+        fetchSavedRecipes();
     }, []);
 
     const loadRecipesFromServer = async (offset: number) => {
@@ -112,6 +126,16 @@ const Recipes = () => {
 
     const onSaveRecipe = async (recipeId: number) => {
         try {
+            let updatedSavedRecipes;
+
+            if (savedRecipes.includes(recipeId)) {
+                updatedSavedRecipes = savedRecipes.filter(id => id !== recipeId); 
+            } else {
+                updatedSavedRecipes = [...savedRecipes, recipeId]; 
+            }
+
+            setSavedRecipes(updatedSavedRecipes); 
+
             const res = await axios.get('/api/users/me');
             if (!res.data.data) {
                 throw new Error("Cannot save recipe, user not found");
@@ -119,14 +143,10 @@ const Recipes = () => {
             setUser(res.data.data);
 
             const recipePayload = {
-                user: user,
+                user: res.data.data,
                 recipeId: recipeId,
             };
             await axios.post("/api/users/saverecipe", recipePayload);
-            setSavedRecipes((prevState) => ({
-                ...prevState,
-                [recipeId]: !prevState[recipeId],
-            }));
         } catch (error: any) {
             console.log("Failed to save recipe:", error.message);
         }
@@ -185,17 +205,16 @@ const Recipes = () => {
                                 </ListBox>
                             </Link>
 
-                            {isLoggedIn && (
+                            {isLoggedIn && user && (
                                 <button
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        onSaveRecipe(recipe.id); // Save or unsave the recipe
+                                        onSaveRecipe(recipe.id);
                                     }}
                                     className="absolute top-[2.7rem] right-[1rem] w-[30px] h-[30px] flex items-center justify-center"
                                 >
-                                    {/* Show solid icon if the recipe is saved */}
-                                    {savedRecipes[recipe.id] ? (
+                                    {savedRecipes.includes(recipe.id) ? ( 
                                         <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
                                     ) : (
                                         <BookmarkIcon className="w-full h-full text-[#000]" />
@@ -204,8 +223,6 @@ const Recipes = () => {
                             )}
                         </div>
                     ))}
-
-
                 </ResultBox>
             )}
             {recipeNumber === 0 ? (

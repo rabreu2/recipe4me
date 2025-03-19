@@ -80,6 +80,24 @@ const SignoutLink = styled.button`
     color: #000;
     border: 2px solid ${({ color }) => color || "#9c9c9c"};
     border-radius: 20px;
+    background-color: #9c9c9c;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    &:hover {
+        background-color: #737373;
+        border-color: #737373;
+    }
+    
+`;
+
+const MyRecipes = styled.a`
+    padding: 0.25rem 0.75rem; 
+    margin-right: 0.5rem;
+    display: flex;
+    float: left;
+    position: relative;
+    color: #000;
+    border: 2px solid ${({ color }) => color || "#9c9c9c"};
+    border-radius: 20px;
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
     &:hover {
         background-color: #9c9c9c;
@@ -122,9 +140,12 @@ const Navbar = () => {
                     </div>
                 ) :
                     (
-                        <SignoutLink onClick={logout}>
-                            Sign Out
-                        </SignoutLink>
+                        <div>
+                            <Link href={"/savedrecipes"}><MyRecipes>My Recipes</MyRecipes></Link>
+                            <SignoutLink onClick={logout}>
+                                Sign Out
+                            </SignoutLink>
+                        </div>
                     )}
             </NavRight>
         </Nav>

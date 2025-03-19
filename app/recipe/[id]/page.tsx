@@ -148,7 +148,6 @@ function Recipe({ params }: { params: { id: string } }) {
 
         const controller = new AbortController();
 
-
         const getRecipe = async () => {
             try {
                 const response = await axios.post('/api/users/getrecipe', id);
@@ -164,8 +163,6 @@ function Recipe({ params }: { params: { id: string } }) {
 
         return () => controller.abort();
     }, [params.id]);
-
-    console.log(recipe);
 
     if (loading) return
     <Hero>
@@ -220,7 +217,7 @@ function Recipe({ params }: { params: { id: string } }) {
                 <InstructionBox>
                     <InstructionsList>
                         {recipe.analyzedInstructions.at(0)?.steps.map((instruction) => (
-                            <Instruction  key={instruction.number}>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
+                            <Instruction key={instruction.number}>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
                         ))}
                     </InstructionsList>
                 </InstructionBox>
