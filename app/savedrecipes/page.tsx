@@ -1,6 +1,6 @@
 'use client'
 import ImageWithFallback from "@/src/helper/imageWithFallback";
-import { BookmarkIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, ClockIcon, InformationCircleIcon, UserIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 import axios from "axios";
 import Link from "next/link";
@@ -56,6 +56,11 @@ const SavedRecipesTitle = styled.h1`
     margin: 20px 0;
 `
 
+const SaveRecipeBlurb = styled.p`
+    font-size: 1.5rem;
+    margin: 1rem 0;
+`
+
 export default function SavedRecipes() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,15 +75,19 @@ export default function SavedRecipes() {
           throw new Error("Cannot save recipe, user not found");
         }
         setUser(res.data.data);
-        setSavedRecipes(res.data.data.savedRecipes);
+        if (res.data.data && Array.isArray(res.data.data.savedRecipes))
+          setSavedRecipes(res.data.data.savedRecipes);
+        else
+          setSavedRecipes([]);
 
         const recipePayload = {
           user: res.data.data,
         };
 
+        if (res.data.data.savedRecipes.length === 0)
+          return;
         const response = await axios.post(`/api/users/getsavedrecipes`, recipePayload);
 
-        console.log("resp " + JSON.stringify(response));
         setRecipes(response.data.data);
 
       } catch (error) {
@@ -137,11 +146,6 @@ export default function SavedRecipes() {
     <div>Loading...</div>
   </Hero>;
 
-  if (!recipes || recipes.length === 0) return
-  <Hero>
-    <div>Recipe Not Found</div>
-  </Hero>;
-
   if (!user) return
   <Hero>
     <div>User Not Found</div>
@@ -149,12 +153,18 @@ export default function SavedRecipes() {
 
   return (
     <Hero>
-      {recipes.length === 0 ? (
+      {savedRecipes.length === 0 ? (
+        <div className="flex flex-col items-center justify-center h-[81.6vh] text-center">
+          <InformationCircleIcon className="w-[75px] h-[75px] text-[#22b14c]" />
+          <SaveRecipeBlurb>
+            You have no saved recipes.<br/>Save your favorite recipes to have them show up here!
+          </SaveRecipeBlurb>
+        </div>
+      ) : recipes.length === 0 ? (
         <p>No recipes available</p>
       ) : (
         <ResultBox>
           <SavedRecipesTitle>My Recipes</SavedRecipesTitle>
-
           {recipes.map((recipe) => (
             <div key={recipe.id} className="relative">
               <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
