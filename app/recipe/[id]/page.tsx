@@ -159,10 +159,10 @@ function Recipe({ params }: { params: { id: string } }) {
                 if (!res.data.data) {
                     throw new Error("Cannot save recipe, user not found");
                 }
-                if (res.data.data.savedRecipes.includes(id)) {
-                    setIsRecipeSaved(false);
-                } else {
+                if (res.data.data.savedRecipes.includes(id.id)) {
                     setIsRecipeSaved(true);
+                } else {
+                    setIsRecipeSaved(false);
                 }
 
                 setUser(res.data.data);
