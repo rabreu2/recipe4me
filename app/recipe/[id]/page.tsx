@@ -140,13 +140,13 @@ interface Recipe {
 
 function Recipe({ params }: { params: { id: string } }) {
     const id = {
-        id: params.id
+        id: parseInt(params.id)
     };
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
-    const { isLoggedIn } = useContext(LoginContext)!;
-    const [user, setUser] = useState<any>();
+    const [, setUser] = useState<any>();
     const [isRecipeSaved, setIsRecipeSaved] = useState<boolean>(false);
+    const { isLoggedIn } = useContext(LoginContext)!;
 
     useEffect(() => {
         if (!params.id) return; // Prevents unnecessary API calls
@@ -154,15 +154,16 @@ function Recipe({ params }: { params: { id: string } }) {
         const controller = new AbortController();
 
         const getUser = async () => {
+            if (!isLoggedIn) return;
             try {
                 const res = await axios.get('/api/users/me');
                 if (!res.data.data) {
                     throw new Error("Cannot save recipe, user not found");
                 }
-                if (res.data.data.savedRecipes.includes(id)) {
-                    setIsRecipeSaved(false);
-                } else {
+                if (res.data.data.savedRecipes.includes(id.id)) {
                     setIsRecipeSaved(true);
+                } else {
+                    setIsRecipeSaved(false);
                 }
 
                 setUser(res.data.data);
@@ -223,11 +224,6 @@ function Recipe({ params }: { params: { id: string } }) {
     if (!recipe) return
     <Hero>
         <div>Recipe Not Found</div>
-    </Hero>;
-    
-    if (!user) return
-    <Hero>
-      <div>User Not Found</div>
     </Hero>;
 
     return (

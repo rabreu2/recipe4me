@@ -73,6 +73,7 @@ const LoginPage: React.FC = () => {
         draggable: true,
         progress: undefined,
         theme: 'colored',
+        style: { backgroundColor: "#22b14c", color: "#fff" },
       });
     }
   }, [searchParams]);
