@@ -140,7 +140,7 @@ interface Recipe {
 
 function Recipe({ params }: { params: { id: string } }) {
     const id = {
-        id: params.id
+        id: parseInt(params.id)
     };
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
@@ -154,6 +154,7 @@ function Recipe({ params }: { params: { id: string } }) {
         const controller = new AbortController();
 
         const getUser = async () => {
+            if (!isLoggedIn) return;
             try {
                 const res = await axios.get('/api/users/me');
                 if (!res.data.data) {
@@ -186,8 +187,7 @@ function Recipe({ params }: { params: { id: string } }) {
         };
 
         getRecipe();
-        if (isLoggedIn)
-            getUser();
+        getUser();
 
         return () => controller.abort();
     }, [params.id]);
