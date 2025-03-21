@@ -36,14 +36,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`min-h-screen min-w-[1060px] flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`min-h-screen w-full flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
-          <Navbar></Navbar>
-            {children}
-            <SpeedInsights />
-            <Footer></Footer>
+          <div className="flex flex-col min-h-screen w-full">
+            <Navbar />
+            <main className="flex flex-col flex-grow w-full bg-[#ebe8d8]">
+              <div className="flex flex-col flex-grow w-full">{children}</div> {/* This ensures children take full height */}
+            </main>
+            <Footer />
+          </div>
+          <SpeedInsights />
         </AuthProvider>
       </body>
     </html>

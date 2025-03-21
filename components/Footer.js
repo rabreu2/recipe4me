@@ -10,7 +10,7 @@ const FooterStyle = styled.div`
     background: #c9c7b9;
     color: #9c9c9c;
     height: 5vh;
-    min-height: 150px;
+    min-height: 100px;
     display: flex;
     font-size: .85rem;
     justify-content: center;

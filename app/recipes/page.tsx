@@ -14,12 +14,11 @@ import RecipeForm from "@/components/RecipeForm";
 import { LoginContext } from "@/app/LoginContext";
 
 const Hero = styled.div`
-    min-height: 81.6vh;
-    background: #ebe8d8;
-    color: #000;
-    justify-content: center;
-    align-items: center;
-`
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
+`;
 
 const ResultBox = styled.ul`
     justify-content: center;
@@ -47,13 +46,25 @@ const RecipeName = styled.li`
     margin-bottom: 2px;
     font-size: max(1.6rem, min(5vw, 1.6rem));
     font-weight: 600;
-`
+`;
+
 const RecipeExtras = styled.li`
     margin-left: 15px;
     margin-bottom: 5px;
     font-size: 0.75rem;
     display: flex;
-`
+`;
+
+const BookmarkButton = styled.button`
+    position: absolute;
+    top: 2.7rem;
+    right: 1rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 const Recipes = () => {
     const router = useRouter();
@@ -71,6 +82,7 @@ const Recipes = () => {
             setRecipes(JSON.parse(returnedRecipes).results);
             setRecipeNumber(JSON.parse(returnedRecipes).totalResults);
         }
+
         const fetchSavedRecipes = async () => {
             try {
                 const res = await axios.get('/api/users/me');
@@ -83,8 +95,8 @@ const Recipes = () => {
                 console.error('Error fetching saved recipes:', error);
             }
         };
-
-        fetchSavedRecipes();
+        if (isLoggedIn)
+            fetchSavedRecipes();
     }, []);
 
     const loadRecipesFromServer = async (offset: number) => {
@@ -129,12 +141,12 @@ const Recipes = () => {
             let updatedSavedRecipes;
 
             if (savedRecipes.includes(recipeId)) {
-                updatedSavedRecipes = savedRecipes.filter(id => id !== recipeId); 
+                updatedSavedRecipes = savedRecipes.filter(id => id !== recipeId);
             } else {
-                updatedSavedRecipes = [...savedRecipes, recipeId]; 
+                updatedSavedRecipes = [...savedRecipes, recipeId];
             }
 
-            setSavedRecipes(updatedSavedRecipes); 
+            setSavedRecipes(updatedSavedRecipes);
 
             const res = await axios.get('/api/users/me');
             if (!res.data.data) {
@@ -206,24 +218,24 @@ const Recipes = () => {
                             </Link>
 
                             {isLoggedIn && user && (
-                                <button
+                                <BookmarkButton
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                         onSaveRecipe(recipe.id);
                                     }}
-                                    className="absolute top-[2.7rem] right-[1rem] w-[30px] h-[30px] flex items-center justify-center"
                                 >
-                                    {savedRecipes.includes(recipe.id) ? ( 
+                                    {savedRecipes.includes(recipe.id) ? (
                                         <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
                                     ) : (
                                         <BookmarkIcon className="w-full h-full text-[#000]" />
                                     )}
-                                </button>
+                                </BookmarkButton>
                             )}
                         </div>
                     ))}
                 </ResultBox>
+
             )}
             {recipeNumber === 0 ? (
                 <p />

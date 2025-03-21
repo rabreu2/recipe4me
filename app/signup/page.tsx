@@ -7,12 +7,19 @@ import logo from "../../public/grocery4me-icon.png";
 import Image from "next/image";
 
 const Hero = styled.div`
-  min-height: 81.6vh;
-  display: flex;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
+`
+
+const Content = styled.div`
+  position:absolute;
+  margin-left:auto;
+  margin-right:auto;
+  width:75%;
   justify-content: center;
-  align-items: center;
-  background: #ebe8d8;
-  color: #000;
+  display: grid;
 `
 
 const RecipeLogo = styled.h1`
@@ -44,53 +51,55 @@ export default function SignupPage() {
 
     return (
         <Hero>
-            <div className="grid">
-                <RecipeLogo><Image
-                    priority={true}
-                    src={logo}
-                    width={75}
-                    height={45}
-                    alt="Recipe4Me Logo"
-                /></RecipeLogo>
-                <form className="grid"
-                    onSubmit={(e) => {
-                        e.preventDefault(); // Prevents page reload
-                        onSignup(); // Your login handler
-                    }}
-                >
-                    <input
-                        id="username"
-                        type="text"
-                        value={user.username}
-                        onChange={(e) => setUser({ ...user, username: e.target.value })}
-                        required
-                        className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
-                    />
-                    <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="username">Username<span className="text-red-500">*</span></label>
+            <Content>
+                <div className="grid">
+                    <RecipeLogo><Image
+                        priority={true}
+                        src={logo}
+                        width={75}
+                        height={45}
+                        alt="Recipe4Me Logo"
+                    /></RecipeLogo>
+                    <form className="grid"
+                        onSubmit={(e) => {
+                            e.preventDefault(); // Prevents page reload
+                            onSignup(); // Your login handler
+                        }}
+                    >
+                        <input
+                            id="username"
+                            type="text"
+                            value={user.username}
+                            onChange={(e) => setUser({ ...user, username: e.target.value })}
+                            required
+                            className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
+                        />
+                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="username">Username<span className="text-red-500">*</span></label>
 
-                    <input
-                        id="email"
-                        type="text"
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        required
-                        className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
-                    />
-                    <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="email">Email<span className="text-red-500">*</span></label>
+                        <input
+                            id="email"
+                            type="text"
+                            value={user.email}
+                            onChange={(e) => setUser({ ...user, email: e.target.value })}
+                            required
+                            className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
+                        />
+                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="email">Email<span className="text-red-500">*</span></label>
 
-                    <input
-                        id="password"
-                        type="password"
-                        value={user.password}
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                        required
-                        className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
-                    />
-                    <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">Password<span className="text-red-500">*</span></label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={user.password}
+                            onChange={(e) => setUser({ ...user, password: e.target.value })}
+                            required
+                            className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
+                        />
+                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">Password<span className="text-red-500">*</span></label>
 
-                    <button className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl transition-colors duration-300 ease-in-out hover:bg-[#187e37]" type="submit">Sign Up</button>
-                </form>
-            </div>
+                        <button className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl transition-colors duration-300 ease-in-out hover:bg-[#187e37]" type="submit">Sign Up</button>
+                    </form>
+                </div>
+            </Content>
         </Hero >
     )
 }
