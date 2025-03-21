@@ -8,12 +8,19 @@ import Image from "next/image";
 import logo from "../../public/grocery4me-icon.png";
 
 const Hero = styled.div`
-  min-height: 81.6vh;
-  display: flex;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
+`
+
+const Content = styled.div`
+  position:absolute;
+  margin-left:auto;
+  margin-right:auto;
+  width:75%;
   justify-content: center;
-  align-items: center;
-  background: #ebe8d8;
-  color: #000;
+  display: grid;
 `
 
 export default function VerifyEmailPage() {
@@ -41,8 +48,9 @@ export default function VerifyEmailPage() {
     }, [token]);
 
     return (
-        <Hero className="flex flex-col items-center justify-center min-h-screen py-2">
-            <div className="mb-5"><Image
+        <Hero>
+            <Content>
+            <div className="mb-5 flex justify-center items-center"><Image
                 priority={true}
                 src={logo}
                 width={75}
@@ -50,7 +58,7 @@ export default function VerifyEmailPage() {
                 alt="Recipe4Me Logo"
             /></div>
             <h1 className="text-4xl mb-5">Email Verification</h1>
-            {token ? `` : <h2 className="p-2 bg-[#22b14c] text-black">
+            {token ? `` : <h2 className="p-2 bg-[#22b14c] text-black text-center">
                 No token provided, please check your email.
             </h2>}
 
@@ -92,6 +100,7 @@ export default function VerifyEmailPage() {
                     <h2 className="text-2xl text-red-500">There was an error, please try again.</h2>
                 </div>
             )}
+            </Content>
         </Hero>
     )
 }

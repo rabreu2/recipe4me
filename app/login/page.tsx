@@ -13,12 +13,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Hero = styled.div`
-  min-height: 81.6vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ebe8d8;
-  color: #000;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
 `
 
 const RecipeLogo = styled.h1`
@@ -29,6 +27,15 @@ const RecipeLogo = styled.h1`
     align-items: center;
     display: flex;
     justify-content: center;
+`
+
+const Content = styled.div`
+  position:absolute;
+  margin-left:auto;
+  margin-right:auto;
+  justify-content: center;
+  width:75%;
+  display: grid;
 `
 
 const LoginPage: React.FC = () => {
@@ -80,6 +87,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <Hero>
+      <Content>
       <ToastContainer />
       <div className="grid">
         <RecipeLogo>{loading ? "" : ""}<Image
@@ -129,8 +137,8 @@ const LoginPage: React.FC = () => {
             Log in
           </button>
         </form>
-
       </div>
+      </Content>
     </Hero>
   )
 }

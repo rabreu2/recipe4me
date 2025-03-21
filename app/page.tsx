@@ -7,17 +7,18 @@ import RecipeForm from "@/components/RecipeForm";
 
 
 const Hero = styled.div`
-  min-height: 81.6vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ebe8d8;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
 `
 
 const Content = styled.div`
   position:absolute;
   margin-left:auto;
   margin-right:auto;
+  width:75%;
+  justify-content: center;
+  display: grid;
 `
 
 export default function Home() {

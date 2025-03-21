@@ -10,12 +10,10 @@ import LoginContext from "@/app/LoginContext";
 import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 
 const Hero = styled.div`
-    min-height: 81.6vh;
-    background: #ebe8d8;
-    color: #000;
-    justify-content: center;
-    align-items: baseline;
-    display: flex;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
 `
 
 const RecipeBox = styled.ul`

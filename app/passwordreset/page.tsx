@@ -8,12 +8,19 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 
 const Hero = styled.div`
-  min-height: 81.6vh;
-  display: flex;
+    display: grid;
+    place-items: center;
+    flex-grow: 1;
+    color: black;
+`
+
+const Content = styled.div`
+  position:absolute;
+  margin-left:auto;
+  margin-right:auto;
+  width:75%;
   justify-content: center;
-  align-items: center;
-  background: #ebe8d8;
-  color: #000;
+  display: grid;
 `
 
 const RecipeLogo = styled.h1`
@@ -29,6 +36,7 @@ const RecipeLogo = styled.h1`
 const ResetBlurb = styled.p`
     font-size: 1.5rem;
     margin: 1rem 0;
+    text-align: center;
 `
 
 const PasswordReset: React.FC = () => {
@@ -55,7 +63,7 @@ const PasswordReset: React.FC = () => {
 
     return (
         <Hero>
-            <div className="grid">
+            <Content>
                 {!emailSent ? (
                     <div>
                         <RecipeLogo>{loading ? "" : ""}<Image
@@ -102,7 +110,7 @@ const PasswordReset: React.FC = () => {
                         </ResetBlurb>
                     </div>
                 )}
-            </div>
+            </Content>
         </Hero>
     )
 }
