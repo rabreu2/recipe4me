@@ -59,17 +59,22 @@ export default function SignupPage() {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setUser((prev) => ({ ...prev, password: value }));
-
-        setPasswordValid({
-            length: value.length >= 8,
-            uppercase: /[A-Z]/.test(value),
-            lowercase: /[a-z]/.test(value),
-            number: /\d/.test(value),
-            symbol: /[@#!$%^&*()]/.test(value),
-        });
+        const { id, value } = e.target;
+        setUser((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+        if (id === "password") {
+            setPasswordValid({
+                length: value.length >= 8,
+                uppercase: /[A-Z]/.test(value),
+                lowercase: /[a-z]/.test(value),
+                number: /\d/.test(value),
+                symbol: /[@#!$%^&*()]/.test(value),
+            });
+        }
     };
+
 
     const onSignup = async () => {
         if (!user.username || !user.email || !user.password) {
