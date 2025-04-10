@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import recipe4me from "../public/recipe4me-removebg.png";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import RecipeForm from "@/components/RecipeForm";
 import { useSearchParams } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
@@ -24,7 +24,7 @@ const Content = styled.div`
   display: grid;
 `
 
-export default function Home() {
+const Home: React.FC = () => {
 
   const searchParams = useSearchParams();
 
@@ -62,3 +62,11 @@ export default function Home() {
     </Hero>
   );
 }
+
+const HomePageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Home />
+  </Suspense>
+);
+
+export default HomePageWithSuspense;
