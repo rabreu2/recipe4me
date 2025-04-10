@@ -9,35 +9,39 @@ await connect();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const {email, password} = reqBody;
-        const user = await User.findOne({email});
+        const { email, password } = reqBody;
+        const user = await User.findOne({ email });
 
-        if (!user) 
-            return NextResponse.json({error: "User does not exist"}, {status: 400});
-        
+        if (!user)
+            return NextResponse.json({ error: "User does not exist" }, { status: 400 });
+
 
         const validPass = await bcryptjs.compare(password, user.password);
 
-        if (!validPass) 
-            return NextResponse.json({error: "Invlid password"}, {status: 400});
+        if (!validPass)
+            return NextResponse.json({ error: "Invlid password" }, { status: 400 });
 
         const tokenData = {
             id: user._id,
             username: user.username,
             email: user.email
         };
-        const token = await jwt.sign(tokenData, process.env.AUTH_SECRET!, {expiresIn: "1d"});
+        const token = await jwt.sign(tokenData, process.env.AUTH_SECRET!, { expiresIn: "1d" });
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
         });
 
         response.cookies.set("token", token, {
-            httpOnly:true,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 60 * 60 * 24, // 1 day
         });
 
         return response;
-    } catch (error:any) {
-        return NextResponse.json({error: error.message}, {status: 500});
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
