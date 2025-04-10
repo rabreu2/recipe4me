@@ -3,7 +3,7 @@ import User from "@/src/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/src/helper/mailer";
 
-connect();
+await connect();
 
 export async function POST(request: NextRequest) {
     try {
