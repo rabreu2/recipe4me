@@ -70,7 +70,8 @@ export default function SavedRecipes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const res = await axios.get('/api/users/me');
+        const res = await axios.get('/api/users/me', { withCredentials: true });
+
         if (!res.data.data) {
           throw new Error("Cannot save recipe, user not found");
         }
@@ -125,7 +126,8 @@ export default function SavedRecipes() {
 
       setSavedRecipes(updatedSavedRecipes);
       setRecipes(updatedRecipes);
-      const res = await axios.get('/api/users/me');
+      const res = await axios.get('/api/users/me', { withCredentials: true });
+
       if (!res.data.data) {
         throw new Error("Cannot save recipe, user not found");
       }

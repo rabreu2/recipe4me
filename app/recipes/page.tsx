@@ -85,7 +85,7 @@ const Recipes = () => {
 
         const fetchSavedRecipes = async () => {
             try {
-                const res = await axios.get('/api/users/me');
+                const res = await axios.get('/api/users/me', { withCredentials: true });
                 if (!res.data.data) {
                     throw new Error("Cannot fetch saved recipes, user not found");
                 }
@@ -148,7 +148,8 @@ const Recipes = () => {
 
             setSavedRecipes(updatedSavedRecipes);
 
-            const res = await axios.get('/api/users/me');
+            const res = await axios.get('/api/users/me', { withCredentials: true });
+
             if (!res.data.data) {
                 throw new Error("Cannot save recipe, user not found");
             }

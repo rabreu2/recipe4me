@@ -154,7 +154,7 @@ function Recipe({ params }: { params: { id: string } }) {
         const getUser = async () => {
             if (!isLoggedIn) return;
             try {
-                const res = await axios.get('/api/users/me');
+                const res = await axios.get('/api/users/me', { withCredentials: true });
                 if (!res.data.data) {
                     throw new Error("Cannot save recipe, user not found");
                 }
@@ -192,7 +192,8 @@ function Recipe({ params }: { params: { id: string } }) {
 
     const onSaveRecipe = async (recipeId: number) => {
         try {
-            const res = await axios.get('/api/users/me');
+            const res = await axios.get('/api/users/me', { withCredentials: true });
+
             if (!res.data.data) {
                 throw new Error("Cannot save recipe, user not found");
             }
