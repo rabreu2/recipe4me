@@ -53,9 +53,14 @@ const LoginPage: React.FC = () => {
         router.push("/");
       }
       setLoading(true);
-      await axios.post("/api/users/login", user);
+      const res = await axios.post("/api/users/login", user);
       setIsLoggedIn(true);
-      router.push("/");
+      if (res.data.data) {
+        const homeUrl = new URL(res.data.data);
+        router.push(homeUrl.toString())
+      } else {
+        router.push("/");
+      }
     } catch (error: any) {
       console.log("Login failed", error.message);
     } finally {
@@ -88,56 +93,56 @@ const LoginPage: React.FC = () => {
   return (
     <Hero>
       <Content>
-      <ToastContainer />
-      <div className="grid">
-        <RecipeLogo>{loading ? "" : ""}<Image
-          priority={true}
-          src={logo}
-          width={75}
-          height={45}
-          alt="Recipe4Me Logo"
-        /></RecipeLogo>
+        <ToastContainer />
+        <div className="grid">
+          <RecipeLogo>{loading ? "" : ""}<Image
+            priority={true}
+            src={logo}
+            width={75}
+            height={45}
+            alt="Recipe4Me Logo"
+          /></RecipeLogo>
 
-        <form className="grid"
-          onSubmit={(e) => {
-            e.preventDefault(); // Prevents page reload
-            onLogin(); // Your login handler
-          }}
-        >
-          <input
-            id="email"
-            type="text"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            required
-            className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
-          />
-          <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="email">
-            Email<span className="text-red-500">*</span>
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-            required
-            className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
-          />
-          <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">
-            Password<span className="text-red-500">*</span>
-          </label>
-
-          <Link href={`/passwordreset`} className="w-fit hover:underline text-sm mb-1 transform -translate-y-[15px]">Forgot Password?</Link>
-
-          <button
-            type="submit"
-            className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl hover:bg-[#187e37] transition-colors duration-300 ease-in-out"
+          <form className="grid"
+            onSubmit={(e) => {
+              e.preventDefault(); // Prevents page reload
+              onLogin(); // Your login handler
+            }}
           >
-            Log in
-          </button>
-        </form>
-      </div>
+            <input
+              id="email"
+              type="text"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              required
+              className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
+            />
+            <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="email">
+              Email<span className="text-red-500">*</span>
+            </label>
+
+            <input
+              id="password"
+              type="password"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              required
+              className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 hover:bg-gray-100 transition-colors duration-300 ease-in-out"
+            />
+            <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">
+              Password<span className="text-red-500">*</span>
+            </label>
+
+            <Link href={`/passwordreset`} className="w-fit hover:underline text-sm mb-1 transform -translate-y-[15px]">Forgot Password?</Link>
+
+            <button
+              type="submit"
+              className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl hover:bg-[#187e37] transition-colors duration-300 ease-in-out"
+            >
+              Log in
+            </button>
+          </form>
+        </div>
       </Content>
     </Hero>
   )
