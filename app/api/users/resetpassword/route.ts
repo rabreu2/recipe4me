@@ -1,7 +1,8 @@
 import { connect } from "@/src/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/src/models/userModel";
-import bcryptjs from "bcryptjs";
+import crypto from 'crypto';
+import bcryptjs from 'bcryptjs';
 
  await connect();
 
@@ -9,7 +10,13 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const { password, token } = reqBody;
-        const user = await User.findOne({ forgotPasswordToken: token, forgotPasswordTokenExpiry: { $gt: Date.now() } });
+
+        const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+        const user = await User.findOne({
+            forgotPasswordToken: hashedToken,
+            forgotPasswordTokenExpiry: { $gt: Date.now() },
+        });
 
         if (!user) {
             return NextResponse.json({ error: "Invalid token" }, { status: 400 });

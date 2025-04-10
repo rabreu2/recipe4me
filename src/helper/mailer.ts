@@ -1,10 +1,14 @@
 import nodemailer from "nodemailer"
 import User from "../models/userModel"
-import bcryptjs from "bcryptjs"
+import crypto from 'crypto';
 
 export const sendEmail = async ({ email, emailType, userId }: any) => {
     try {
-        const hashedToken = await bcryptjs.hash(userId.toString(), 10);
+        const rawToken = crypto.randomBytes(32).toString('hex');
+
+        const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+
+        let resetLink = "";
 
         if (emailType === "VERIFY") {
             await User.findByIdAndUpdate(userId,
@@ -13,6 +17,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
                     verifyTokenExpiry: Date.now() + 3600000
                 },
             )
+            resetLink = `${process.env.NEXT_PUBLIC_DOMAIN}/verifyemail?token=${rawToken}`;
         } else if (emailType === "RESET") {
             await User.findByIdAndUpdate(userId,
                 {
@@ -20,6 +25,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
                     forgotPasswordTokenExpiry: Date.now() + 3600000
                 },
             )
+            resetLink = `${process.env.NEXT_PUBLIC_DOMAIN}/resetpassword?token=${rawToken}`;
         }
 
         const transport = nodemailer.createTransport({
@@ -39,15 +45,14 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
                         <tr>
                         <td align="center" valign="middle">
                         <div style="margin-left: 8px;">
-                            <img src="https://recipe4me.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Frecipe4me-removebg.7dfdee32.png&w=640&q=75" alt="Recipe4Me logo" width="300" height="128">
-                            <p style="margin-top: 10px; font-size: 1.2rem;">
-                            Click the button below to ${emailType === "VERIFY" ? "verify your email." : "reset your password."}
-                            </p>
-                            ${emailType === "VERIFY" ? `<a href="${process.env.NEXT_PUBLIC_DOMAIN}/verifyemail?token=${hashedToken}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">` : `<a href="${process.env.NEXT_PUBLIC_DOMAIN}/resetpassword?token=${hashedToken}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">`}
-                            
-                            ${emailType === "VERIFY" ? "Verify Email" : "Reset Password"}
-                            </a>
-                        </div>
+                                <img src="https://recipe4me.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Frecipe4me-removebg.7dfdee32.png&w=640&q=75" alt="Recipe4Me logo" width="300" height="128">
+                                <p style="margin-top: 10px; font-size: 1.2rem;">
+                                Click the button below to ${emailType === "VERIFY" ? "verify your email." : "reset your password."}
+                                </p>
+                                <a href="${resetLink}" style="display: inline-block; padding: 4px 0; margin-top: 4px; font-size: 1.125rem; color: #000; background-color: #22b14c; border: 1px solid #22b14c; border-radius: 12px; text-decoration: none; text-align: center; width: 150px; transition: background-color 0.3s ease-in-out;" onmouseover="this.style.backgroundColor='#187e37'" onmouseout="this.style.backgroundColor='#22b14c'">
+                                    ${emailType === "VERIFY" ? "Verify Email" : "Reset Password"}
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     </table>

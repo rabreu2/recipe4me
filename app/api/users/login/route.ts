@@ -11,9 +11,15 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { email, password } = reqBody;
         const user = await User.findOne({ email });
+        let homeUrl = undefined;
 
         if (!user)
             return NextResponse.json({ error: "User does not exist" }, { status: 400 });
+
+        if (!user.isVerified || user.isVerified === false) {
+            homeUrl = new URL('/', request.nextUrl);
+            homeUrl.searchParams.set('message', 'Please check your email for email verification');
+        }
 
 
         const validPass = await bcryptjs.compare(password, user.password);
@@ -30,6 +36,7 @@ export async function POST(request: NextRequest) {
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
+            data: homeUrl ? homeUrl.toString() : null,  // Send homeUrl as a string or null if it's not set
         });
 
         response.cookies.set("token", token, {
