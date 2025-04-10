@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/src/helper/getDataFromToken";
 import User from "@/src/models/userModel";
 
-connect()
+await connect();
 
 export async function GET(request:NextRequest){
     try {

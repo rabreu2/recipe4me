@@ -1,7 +1,7 @@
 import { connect } from "@/src/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 
-connect();
+await connect();
 
 export async function POST(request: NextRequest) {
     const API_KEY = process.env.API_KEY!;
