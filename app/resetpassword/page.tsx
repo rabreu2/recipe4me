@@ -58,52 +58,29 @@ export default function ResetPasswordPage() {
                     alt="Recipe4Me Logo"
                 /></div>
                 <h1 className="text-4xl mb-5 text-center">Password Reset</h1>
-                {user.token ? `` : <h2 className="p-2 bg-[#22b14c] text-black text-center">
-                    No token provided, please check your email.
-                </h2>}
-
-
-                {reset ? (
+                {!user.token ? (
+                    <h2 className="p-2 bg-[#22b14c] text-black text-center">
+                        No token provided, please check your email.
+                    </h2>
+                ) : reset ? (
                     <div className="contents">
                         <h2 className="text-2xl">Your password has been reset! Click below to log in.</h2>
-                        <a href={`${process.env.NEXT_PUBLIC_DOMAIN}/login`}
-                            style={{
-                                display: 'inline-block',
-                                padding: '4px 0',
-                                justifySelf: 'center',
-                                marginTop: '4px',
-                                fontSize: '1.125rem',
-                                color: '#000',
-                                backgroundColor: '#22b14c',
-                                border: '1px solid #22b14c',
-                                borderRadius: '12px',
-                                textDecoration: 'none',
-                                textAlign: 'center',
-                                width: '150px',
-                                transition: 'background-color 0.3s ease-in-out, border-color 0.3s ease-in-out',
-                                margin: '20px',
-                            }}
-                            onMouseOver={(e) => {
-                                e.currentTarget.style.backgroundColor = '#187e37';
-                                e.currentTarget.style.borderColor = '#187e37';
-                            }}
-                            onMouseOut={(e) => {
-                                e.currentTarget.style.backgroundColor = '#22b14c';
-                                e.currentTarget.style.borderColor = '#22b14c';
-                            }}>
+                        <a
+                            href={`${process.env.NEXT_PUBLIC_DOMAIN}/login`}
+                            className="inline-block justify-self-center mt-4 text-lg text-black bg-[#22b14c] border border-[#22b14c] rounded-xl text-center w-[150px] transition-colors duration-300 ease-in-out hover:bg-[#187e37] hover:border-[#187e37] p-1"
+                        >
                             Log In
                         </a>
                     </div>
                 ) : (
-                    <form className="grid"
+                    <form
+                        className="grid"
                         onSubmit={(e) => {
-                            e.preventDefault(); // Prevents page reload
+                            e.preventDefault();
                             if (user.password !== confirmPassword) {
                                 setError("Please enter matching passwords.");
                                 return;
                             }
-
-                            // Clear error and proceed with form submission
                             setError("");
                             resetUserPassword();
                         }}
@@ -116,7 +93,9 @@ export default function ResetPasswordPage() {
                             required
                             className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
                         />
-                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">Password<span className="text-red-500">*</span></label>
+                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="password">
+                            Password<span className="text-red-500">*</span>
+                        </label>
 
                         <input
                             id="confirmpassword"
@@ -126,10 +105,16 @@ export default function ResetPasswordPage() {
                             required
                             className="pl-2 pr-4 py-1 pt-4 text-gray-600 text-lg border rounded-xl focus:outline-none focus:border-gray-600 transition-colors duration-300 ease-in-out hover:bg-gray-100"
                         />
-                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="confirmpassword">Confirm Password<span className="text-red-500">*</span></label>
+                        <label className="text-sm transform -translate-y-[50px] -translate-x-[-10px]" htmlFor="confirmpassword">
+                            Confirm Password<span className="text-red-500">*</span>
+                        </label>
 
-
-                        <button className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl transition-colors duration-300 ease-in-out hover:bg-[#187e37]" type="submit">Reset Password</button>
+                        <button
+                            className="py-1 mt-1 text-lg text-gray-800 bg-[#22b14c] border rounded-xl transition-colors duration-300 ease-in-out hover:bg-[#187e37]"
+                            type="submit"
+                        >
+                            Reset Password
+                        </button>
                     </form>
                 )}
 

@@ -57,7 +57,7 @@ export default function VerifyEmailPage() {
                 height={45}
                 alt="Recipe4Me Logo"
             /></div>
-            <h1 className="text-4xl mb-5">Email Verification</h1>
+            <h1 className="text-4xl mb-5 text-center">Email Verification</h1>
             {token ? `` : <h2 className="p-2 bg-[#22b14c] text-black text-center">
                 No token provided, please check your email.
             </h2>}

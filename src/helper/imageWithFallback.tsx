@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
+import Image, { ImageProps, StaticImageData } from 'next/image';
 
-const ImageWithFallback = (props: { [x: string]: any; src: any; fallbackSrc: any; }) => {
-    const { src, fallbackSrc, ...rest } = props;
-    const [imgSrc, setImgSrc] = useState(src);
+type SrcType = string | StaticImageData;
+
+interface ImageWithFallbackProps extends Omit<ImageProps, 'src'> {
+    src: SrcType;
+    fallbackSrc: SrcType;
+}
+
+const ImageWithFallback = ({
+    src,
+    fallbackSrc,
+    alt,
+    ...rest
+}: ImageWithFallbackProps) => {
+    const [imgSrc, setImgSrc] = useState<SrcType>(src);
 
     return (
         <Image
             {...rest}
             src={imgSrc}
-            alt="Recipe Image"
-            onError={() => {
-                setImgSrc(fallbackSrc);
-            }}
+            alt={alt}
+            onError={() => setImgSrc(fallbackSrc)}
         />
     );
 };
