@@ -25,15 +25,13 @@ const ResultBox = styled.ul`
     align-items: center;
     display: grid;
     margin-top: 30px;
-    min-width: 1045px;
 `
 
 const ListBox = styled.div`
     display: flex;
     height: 15vh;
-    width: 75vw;
     max-width: 1720px;
-    min-width: 65rem;
+    min-width: 360px;
     min-height: 13rem;
     background: #d3d1c5;
     margin-top: 15px;
@@ -44,7 +42,6 @@ const ListBox = styled.div`
 const RecipeName = styled.li`
     margin-left: 15px;
     margin-bottom: 2px;
-    font-size: max(1.6rem, min(5vw, 1.6rem));
     font-weight: 600;
 `;
 
@@ -57,8 +54,8 @@ const RecipeExtras = styled.li`
 
 const BookmarkButton = styled.button`
     position: absolute;
-    top: 2.7rem;
-    right: 1rem;
+    top: 0.5rem;
+    right: 0.5rem;
     width: 30px;
     height: 30px;
     display: flex;
@@ -175,18 +172,35 @@ const Recipes = () => {
                     {recipes.map((recipe) => (
                         <div key={recipe.id} className="relative">
                             <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
-                                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]">
-                                    <ImageWithFallback
-                                        src={recipe.image}
-                                        alt="Recipe Image"
-                                        width={200}
-                                        height={200}
-                                        fallbackSrc={img}
-                                    />
+                                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] xl:w-[75vw] w-[60vw]">
+                                    <div className="relative aspect-[128/95] xl:w-[300px] w-[185px]">
+                                        <ImageWithFallback
+                                            src={recipe.image}
+                                            fallbackSrc={img}
+                                            alt="Recipe Image"
+                                            fill
+                                            className="object-cover rounded-lg "
+                                        />
+                                        {isLoggedIn && user && (
+                                            <BookmarkButton
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    onSaveRecipe(recipe.id);
+                                                }}
+                                            >
+                                                {savedRecipes.includes(recipe.id) ? (
+                                                    <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                                                ) : (
+                                                    <BookmarkIcon className="w-full h-full text-[#000] hover:text-[#22b14c]" />
+                                                )}
+                                            </BookmarkButton>
+                                        )}
+                                    </div>
                                     <div className="mt-3">
                                         <div className="flow-root">
                                             <div className="flex float-left relative">
-                                                <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline">
+                                                <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline text-l lg:[font-size:max(1.6rem,min(5vw,1.6rem))]">
                                                     {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
                                                 </RecipeName>
                                             </div>
@@ -208,31 +222,16 @@ const Recipes = () => {
                                                 marginLeft: "15px",
                                                 textOverflow: "ellipsis",
                                                 fontSize: "1rem",
-                                                display: "-webkit-box",
                                                 WebkitLineClamp: 3,
                                                 WebkitBoxOrient: "vertical",
                                                 lineHeight: "1.5em",
-                                            }}
+                                            }
+                                            }
+                                            className="hidden xl:[display:-webkit-box]"
                                         />
                                     </div>
                                 </ListBox>
                             </Link>
-
-                            {isLoggedIn && user && (
-                                <BookmarkButton
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        onSaveRecipe(recipe.id);
-                                    }}
-                                >
-                                    {savedRecipes.includes(recipe.id) ? (
-                                        <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
-                                    ) : (
-                                        <BookmarkIcon className="w-full h-full text-[#000]" />
-                                    )}
-                                </BookmarkButton>
-                            )}
                         </div>
                     ))}
                 </ResultBox>
@@ -246,13 +245,13 @@ const Recipes = () => {
                         pageCount={Math.ceil(recipeNumber / 10)}
                         pageRangeDisplayed={5}
                         className="flex"
-                        pageClassName="text-black transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] mx-1 my-0 border border-black"
+                        pageClassName="hidden lg:list-item text-black transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] mx-1 my-0 border border-black"
                         pageLinkClassName="float-left px-4 py-2"
-                        breakClassName="font-bold text-black mx-1 my-0"
+                        breakClassName="hidden lg:list-item font-bold text-black mx-1 my-0"
                         breakLinkClassName="float-left px-4 py-2"
-                        previousClassName="text-black border border-black mx-1 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
+                        previousClassName="text-black border border-black lg:mx-1 mx-16 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
                         previousLinkClassName="float-left px-4 py-2"
-                        nextClassName="text-black border border-black mx-1 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
+                        nextClassName="text-black border border-black lg:mx-1 mx-16 my-0 transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]"
                         nextLinkClassName="float-left px-4 py-2"
                         activeClassName="bg-[#c9c7b9]"
                         breakLabel="..."

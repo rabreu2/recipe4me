@@ -21,15 +21,13 @@ const ResultBox = styled.ul`
     align-items: center;
     display: grid;
     margin-top: 30px;
-    min-width: 1045px;
 `
 
 const ListBox = styled.div`
     display: flex;
     height: 15vh;
-    width: 75vw;
     max-width: 1720px;
-    min-width: 65rem;
+    min-width: 360px;
     min-height: 13rem;
     background: #d3d1c5;
     margin-top: 15px;
@@ -40,9 +38,8 @@ const ListBox = styled.div`
 const RecipeName = styled.li`
     margin-left: 15px;
     margin-bottom: 2px;
-    font-size: max(1.6rem, min(5vw, 1.6rem));
     font-weight: 600;
-`
+`;
 const RecipeExtras = styled.li`
     margin-left: 15px;
     margin-bottom: 5px;
@@ -60,6 +57,16 @@ const SaveRecipeBlurb = styled.p`
     font-size: 1.5rem;
     margin: 1rem 0;
 `
+const BookmarkButton = styled.button`
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 export default function SavedRecipes() {
   const [recipes, setRecipes] = useState<any[]>([]);
@@ -159,7 +166,7 @@ export default function SavedRecipes() {
         <div className="flex flex-col items-center justify-center h-[81.6vh] text-center">
           <InformationCircleIcon className="w-[75px] h-[75px] text-[#22b14c]" />
           <SaveRecipeBlurb>
-            You have no saved recipes.<br/>Save your favorite recipes to have them show up here!
+            You have no saved recipes.<br />Save your favorite recipes to have them show up here!
           </SaveRecipeBlurb>
         </div>
       ) : recipes.length === 0 ? (
@@ -170,18 +177,33 @@ export default function SavedRecipes() {
           {recipes.map((recipe) => (
             <div key={recipe.id} className="relative">
               <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
-                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9]">
-                  <ImageWithFallback
-                    src={recipe.image}
-                    alt="Recipe Image"
-                    width={200}
-                    height={200}
-                    fallbackSrc={img}
-                  />
+                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] xl:w-[75vw] w-[60vw]">
+                  <div className="relative aspect-[128/95] xl:w-[300px] w-[185px]">
+                    <ImageWithFallback
+                      src={recipe.image}
+                      fallbackSrc={img}
+                      alt="Recipe Image"
+                      fill
+                      className="object-cover rounded-lg "
+                    />
+                    <BookmarkButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onSaveRecipe(recipe.id);
+                      }}
+                    >
+                      {savedRecipes.includes(recipe.id) ? (
+                        <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                      ) : (
+                        <BookmarkIcon className="w-full h-full text-[#000]" />
+                      )}
+                    </BookmarkButton>
+                  </div>
                   <div className="mt-3">
                     <div className="flow-root">
                       <div className="flex float-left relative">
-                        <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline">
+                        <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline text-l lg:[font-size:max(1.6rem,min(5vw,1.6rem))]">
                           {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
                         </RecipeName>
                       </div>
@@ -203,29 +225,17 @@ export default function SavedRecipes() {
                         marginLeft: "15px",
                         textOverflow: "ellipsis",
                         fontSize: "1rem",
-                        display: "-webkit-box",
                         WebkitLineClamp: 3,
                         WebkitBoxOrient: "vertical",
                         lineHeight: "1.5em",
-                      }}
+                      }
+                      }
+                      className="hidden xl:[display:-webkit-box]"
                     />
                   </div>
                 </ListBox>
               </Link>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onSaveRecipe(recipe.id);
-                }}
-                className="absolute top-[2.7rem] right-[1rem] w-[30px] h-[30px] flex items-center justify-center"
-              >
-                {savedRecipes.includes(recipe.id) ? (
-                  <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
-                ) : (
-                  <BookmarkIcon className="w-full h-full text-[#000]" />
-                )}
-              </button>
+
             </div>
           ))}
         </ResultBox>
