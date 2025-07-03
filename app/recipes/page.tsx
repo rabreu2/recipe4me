@@ -29,6 +29,7 @@ const ResultBox = styled.ul`
 
 const ListBox = styled.div`
     display: flex;
+    align-items: center;
     width: 100%;
     max-width: 1720px;
     background: #d3d1c5;
@@ -36,7 +37,6 @@ const ListBox = styled.div`
     padding: 15px;
     border-radius: 0.5rem;
     min-height: 13rem;
-    align-items: flex-start;
 `;
 
 const RecipeName = styled.li`
@@ -174,7 +174,7 @@ const Recipes = () => {
                             <div key={recipe.id} className="relative">
                                 <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
                                     <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] xl:w-[75vw] w-[60vw]">
-                                        <div className="relative aspect-[128/95] w-[175px] sm:w-[225px] xl:w-[300px] shrink-0">
+                                        <div className="relative aspect-[128/95] w-[185px] sm:w-[225px] xl:w-[300px] shrink-0">
                                             <ImageWithFallback
                                                 src={recipe.image}
                                                 fallbackSrc={img}
