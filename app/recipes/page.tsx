@@ -28,15 +28,15 @@ const ResultBox = styled.ul`
 `
 
 const ListBox = styled.div`
-  display: flex;
-  width: 100%;
-  max-width: 1720px;
-  background: #d3d1c5;
-  margin-top: 15px;
-  padding: 15px;
-  border-radius: 0.5rem;
-  min-height: 13rem;
-  align-items: flex-start;
+    display: flex;
+    width: 100%;
+    max-width: 1720px;
+    background: #d3d1c5;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 0.5rem;
+    min-height: 13rem;
+    align-items: flex-start;
 `;
 
 const RecipeName = styled.li`
