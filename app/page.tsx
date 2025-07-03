@@ -10,29 +10,26 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Hero = styled.div`
-    display: grid;
-    place-items: center;
-    flex-grow: 1;
-`
+    min-height: 74vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+`;
 
 const Content = styled.div`
-  position:absolute;
-  margin-left:auto;
-  margin-right:auto;
-  width:75%;
-  justify-content: center;
-  display: grid;
-`
+    width: 100%;
+    max-width: 583px;
+    display: grid;
+    place-items: center;
+`;
 
 const Home: React.FC = () => {
 
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Check for the message in the query parameters
-
     const message = searchParams?.get('message');
-
     if (message) {
       toast.info(message as string, {
         position: 'top-right',
@@ -56,10 +53,17 @@ const Home: React.FC = () => {
           priority={true}
           src={recipe4me}
           alt="Recipe4Me"
+          style={{ maxWidth: "100%", height: "auto" }}
         />
-        <RecipeForm className="w-full max-w-[583px] min-w-[250px] mt-2.5" setPage={undefined} setRecipes={undefined} setRecipeNumber={undefined} />
+        <RecipeForm
+          className="w-full min-w-[250px] mt-2.5"
+          setPage={undefined}
+          setRecipes={undefined}
+          setRecipeNumber={undefined}
+        />
       </Content>
     </Hero>
+
   );
 }
 

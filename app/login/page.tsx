@@ -13,11 +13,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Hero = styled.div`
+    min-height: 74vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: black;
+`;
+
+const Content = styled.div`
+    width: 100%;
+    max-width: 583px;
     display: grid;
     place-items: center;
-    flex-grow: 1;
-    color: black;
-`
+`;
 
 const RecipeLogo = styled.h1`
     margin: 2rem 0;
@@ -27,15 +36,6 @@ const RecipeLogo = styled.h1`
     align-items: center;
     display: flex;
     justify-content: center;
-`
-
-const Content = styled.div`
-  position:absolute;
-  margin-left:auto;
-  margin-right:auto;
-  justify-content: center;
-  width:75%;
-  display: grid;
 `
 
 const LoginPage: React.FC = () => {
