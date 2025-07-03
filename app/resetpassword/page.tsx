@@ -8,20 +8,20 @@ import Image from "next/image";
 import logo from "../../public/grocery4me-icon.png";
 
 const Hero = styled.div`
-    display: grid;
-    place-items: center;
-    flex-grow: 1;
+    min-height: 74vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
     color: black;
-`
+`;
 
 const Content = styled.div`
-  position:absolute;
-  margin-left:auto;
-  margin-right:auto;
-  width:75%;
-  justify-content: center;
-  display: grid;
-`
+    width: 100%;
+    max-width: 583px;
+    display: grid;
+    place-items: center;
+`;
 
 export default function ResetPasswordPage() {
     const [reset, setReset] = useState(false);
