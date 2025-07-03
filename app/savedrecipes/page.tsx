@@ -20,7 +20,7 @@ const ResultBox = styled.ul`
     justify-content: center;
     align-items: center;
     display: grid;
-    margin-top: 30px;
+    margin: 30px 0;
 `
 
 const ListBox = styled.div`
@@ -50,7 +50,6 @@ const RecipeExtras = styled.li`
 const SavedRecipesTitle = styled.h1`
     font-weight: 600;
     font-size: 3rem;
-    margin: 20px 0;
 `
 
 const SaveRecipeBlurb = styled.p`
@@ -173,7 +172,7 @@ export default function SavedRecipes() {
         <p>No recipes available</p>
       ) : (
         <ResultBox>
-          <SavedRecipesTitle>My Recipes</SavedRecipesTitle>
+          <SavedRecipesTitle className="my-2 lg:my-5">My Recipes</SavedRecipesTitle>
           {recipes.map((recipe) => (
             <div key={recipe.id} className="relative">
               <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>

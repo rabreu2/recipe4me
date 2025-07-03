@@ -17,13 +17,13 @@ const Nav = styled.nav`
     z-index: 10;
     `;
 
-const NavbarLogo = styled.a`
+const NavbarLogo = styled.div`
     padding: 0rem 0.5rem; 
     display: block;
     color: #000;
 `;
 
-const SignupLink = styled.a`
+const SignupLink = styled.p`
     padding: 0.25rem 0.75rem; 
     display: flex;
     float: right;
@@ -39,7 +39,7 @@ const SignupLink = styled.a`
     }
 `;
 
-const LoginLink = styled.a`
+const LoginLink = styled.p`
     padding: 0.25rem 0.75rem;
     margin-right: 0.5rem;
     display: flex;
@@ -89,7 +89,7 @@ const SignoutLink = styled.button`
     
 `;
 
-const MyRecipes = styled.a`
+const MyRecipes = styled.p`
     padding: 0.25rem 0.75rem; 
     margin-right: 0.5rem;
     display: flex;
@@ -120,7 +120,7 @@ const Navbar = () => {
     return (
         <Nav>
             <NavLeft>
-                <Link href={"/"}>
+                <Link href="/" passHref>
                     <NavbarLogo>
                         <Image
                             priority={true}
