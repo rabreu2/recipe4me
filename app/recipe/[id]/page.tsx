@@ -25,31 +25,18 @@ const RecipeBox = styled.ul`
 `
 
 const RecipeName = styled.h1`
-    margin: 2rem 0;
-    font-size: 3rem;
     font-weight: 600;
     line-height: 1.1;
-`
-
-const RecipeSummary = styled.div`
-    font-size: 18px;
 `
 
 const RecipeExtras = styled.div`
     display: flex;
-    margin-left: 88px;
     margin-top: 5px;
 `
 
 const Ingredients = styled.h1`
-    margin: 2rem 0;
-    font-size: 2.3rem;
     font-weight: 600;
     line-height: 1.1;
-`
-
-const IngredientsList = styled.ul`
-    margin-left: 5px;
 `
 
 const IngredientLabel = styled.label`
@@ -58,11 +45,17 @@ const IngredientLabel = styled.label`
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    padding-top: 6px;
+    @media (min-width: 768px) {
+        padding-top: 4px; 
+    }
+    @media (min-width: 1280px) {
+        padding-top: 0px;
+    }
 `
 
 const Ingredient = styled.input`
@@ -83,21 +76,17 @@ const Checkmark = styled.span`
 `
 
 const Instructions = styled.h1`
-    margin: 2rem 0;
-    font-size: 2.3rem;
     font-weight: 600;
     line-height: 1.1;
 `
 
 const InstructionBox = styled.div`
-    margin-left: 5px;
     margin-bottom: 2rem;
 `
 
 const InstructionsList = styled.ol`
     padding-left: 20px;
     list-style: auto;
-    font-size: 22px;
 `
 
 const Instruction = styled.li`
@@ -229,42 +218,56 @@ function Recipe({ params }: { params: { id: string } }) {
         <Hero>
             <RecipeBox>
                 <div className="relative flex items-center justify-between w-full">
-                    <RecipeName>
+                    <RecipeName className="text-lg sm:text-2xl md:text-3xl lg:text-5xl xl:mx-0 mx-6 my-8">
                         {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
                     </RecipeName>
-                    {isLoggedIn && (
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                onSaveRecipe(recipe.id);
-                            }}
-                            className="absolute right-0 flex items-center justify-center w-[48px] h-[48px]"
-                        >
-                            {isRecipeSaved ? (
-                                <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
-                            ) : (
-                                <BookmarkIcon className="w-full h-full text-[#000]" />
-                            )}
-                        </button>
-                    )}
                 </div>
-                <hr className="h-0.5 bg-[#9c9c9c] mb-10"></hr>
-                <div className="flex">
-                    <ImageWithFallback src={recipe.image}
-                        alt="Recipe Image"
-                        width={300}
-                        height={200}
-                        fallbackSrc={img}
-                    />
-                    <RecipeSummary dangerouslySetInnerHTML={{ __html: recipe.summary.replace(/(<([^>]+)>)/ig, "") }} className="ml-5"></RecipeSummary>
+                <hr className="h-0.5 bg-[#9c9c9c] mb-10 xl:mx-0 mx-6"></hr>
+                <div className="md:flex md:items-start md:gap-5 grid place-items-center xl:mx-0 mx-6">
+                    <div className="relative aspect-[128/95] w-[300px] sm:w-[400px] md:w-[300px] shrink-0 md:mb-0 mb-12">
+                        <ImageWithFallback
+                            src={recipe.image}
+                            fallbackSrc={img}
+                            alt="Recipe Image"
+                            fill
+                            className="object-cover rounded-lg"
+                        />
+
+                        {isLoggedIn && (
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    onSaveRecipe(recipe.id);
+                                }}
+                                className="absolute right-0 flex items-center justify-center w-[48px] h-[48px]"
+                            >
+                                {isRecipeSaved ? (
+                                    <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                                ) : (
+                                    <BookmarkIcon className="w-full h-full text-[#000]" />
+                                )}
+                            </button>
+                        )}
+
+                        <RecipeExtras className="[transform:translateY(228px)] sm:[transform:translateY(300px)] md:[transform:translateY(230px)] ml-[88px] sm:ml-[138px] md:ml-[88px]">
+                            <ClockIcon className="w-4 h-5 mt-[1px]" />
+                            &nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;
+                            <UserIcon className="w-4 h-5 mt-[1px]" />
+                            &nbsp;{recipe.servings}
+                        </RecipeExtras>
+                    </div>
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: recipe.summary.replace(/(<([^>]+)>)/gi, ""),
+                        }}
+                        className="flex-1 min-w-0 text-xs sm:text-sm lg:text-base xl:text-lg break-words"
+                    ></div>
                 </div>
-                <RecipeExtras>
-                    <ClockIcon className="w-4 h-5 mt-[1px]" />&nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;<UserIcon className="w-4 h-5 mt-[1px]" />&nbsp;{recipe.servings}
-                </RecipeExtras>
-                <hr className="h-0.5 bg-[#9c9c9c] mt-10"></hr>
-                <Ingredients>Ingredients</Ingredients>
-                <IngredientsList>
+
+                <hr className="h-0.5 bg-[#9c9c9c] mt-10 xl:mx-0 mx-6"></hr>
+                <Ingredients className="text-lg sm:text-2xl md:text-3xl lg:text-5xl xl:mx-0 mx-6 my-8">Ingredients</Ingredients>
+                <ul className="mx-10 xl:mx-6 text-xs sm:text-sm lg:text-base xl:text-lg break-words">
                     {recipe.extendedIngredients.map((ingredient) => (
                         <IngredientLabel key={ingredient.id} className="group">{ingredient.original.replace(/^(.)/, (match) => match.toUpperCase())}
                             <Ingredient className="peer" type="checkbox" id={ingredient.id.toString()} name={ingredient.id.toString()} />
@@ -282,13 +285,13 @@ function Recipe({ params }: { params: { id: string } }) {
                             </svg>
                         </IngredientLabel>
                     ))}
-                </IngredientsList>
-                <hr className="h-0.5 bg-[#9c9c9c] mt-7"></hr>
-                <Instructions>Instructions</Instructions>
-                <InstructionBox>
+                </ul>
+                <hr className="h-0.5 bg-[#9c9c9c] mt-10 xl:mx-0 mx-6"></hr>
+                <Instructions className="text-lg sm:text-2xl md:text-3xl lg:text-5xl xl:mx-0 mx-6 my-8">Instructions</Instructions>
+                <InstructionBox className="mx-10 xl:mx-6">
                     <InstructionsList>
                         {recipe.analyzedInstructions.at(0)?.steps.map((instruction) => (
-                            <Instruction key={instruction.number}>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
+                            <Instruction className="text-xs sm:text-sm lg:text-base xl:text-lg break-words" key={instruction.number}>{instruction.step.replace(/\b(Saut|saut)\b/g, "$1é").replace(/\.(\S)/g, ". $1")}</Instruction>
                         ))}
                     </InstructionsList>
                 </InstructionBox>
