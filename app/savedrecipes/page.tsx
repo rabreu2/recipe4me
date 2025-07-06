@@ -25,15 +25,15 @@ const ResultBox = styled.ul`
 
 const ListBox = styled.div`
     display: flex;
-    height: 15vh;
+    align-items: center;
+    width: 100%;
     max-width: 1720px;
-    min-width: 360px;
-    min-height: 13rem;
     background: #d3d1c5;
     margin-top: 15px;
     padding: 15px;
     border-radius: 0.5rem;
-`
+    min-height: 13rem;
+`;
 
 const RecipeName = styled.li`
     margin-left: 15px;
@@ -171,74 +171,76 @@ export default function SavedRecipes() {
       ) : recipes.length === 0 ? (
         <p>No recipes available</p>
       ) : (
-        <ResultBox>
-          <SavedRecipesTitle className="my-2 lg:my-5">My Recipes</SavedRecipesTitle>
-          {recipes.map((recipe) => (
-            <div key={recipe.id} className="relative">
-              <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
-                <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] xl:w-[75vw] w-[60vw]">
-                  <div className="relative aspect-[128/95] xl:w-[300px] w-[185px]">
-                    <ImageWithFallback
-                      src={recipe.image}
-                      fallbackSrc={img}
-                      alt="Recipe Image"
-                      fill
-                      className="object-cover rounded-lg "
-                    />
-                    <BookmarkButton
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onSaveRecipe(recipe.id);
-                      }}
-                    >
-                      {savedRecipes.includes(recipe.id) ? (
-                        <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
-                      ) : (
-                        <BookmarkIcon className="w-full h-full text-[#000]" />
-                      )}
-                    </BookmarkButton>
-                  </div>
-                  <div className="mt-3">
-                    <div className="flow-root">
-                      <div className="flex float-left relative">
-                        <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline text-l lg:[font-size:max(1.6rem,min(5vw,1.6rem))]">
-                          {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
-                        </RecipeName>
-                      </div>
+        <div className="px-4 sm:px-8">
+          <ResultBox>
+            <SavedRecipesTitle className="my-2 lg:my-5">My Recipes</SavedRecipesTitle>
+            {recipes.map((recipe) => (
+              <div key={recipe.id} className="relative">
+                <Link className="group contents" href={`/recipe/${recipe.id}`} passHref>
+                  <ListBox className="transition-colors duration-300 ease-in-out hover:bg-[#c9c7b9] xl:w-[75vw] w-[60vw]">
+                    <div className="relative aspect-[128/95] w-[185px] sm:w-[225px] xl:w-[300px] shrink-0">
+                      <ImageWithFallback
+                        src={recipe.image}
+                        fallbackSrc={img}
+                        alt="Recipe Image"
+                        fill
+                        className="object-cover rounded-lg "
+                      />
+                      <BookmarkButton
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          onSaveRecipe(recipe.id);
+                        }}
+                      >
+                        {savedRecipes.includes(recipe.id) ? (
+                          <BookmarkIconSolid className="w-full h-full text-[#22b14c]" />
+                        ) : (
+                          <BookmarkIcon className="w-full h-full text-[#000]" />
+                        )}
+                      </BookmarkButton>
                     </div>
-                    <RecipeExtras>
-                      <ClockIcon className="w-4 h-4" />
-                      &nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;
-                      <UserIcon className="w-4 h-4" />
-                      &nbsp;{recipe.servings}
-                    </RecipeExtras>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: recipe.summary
-                          .replace(/(<([^>]+)>)/gi, "")
-                          .replace(/^(.)/, (match: string) => match.toUpperCase()),
-                      }}
-                      style={{
-                        overflow: "hidden",
-                        marginLeft: "15px",
-                        textOverflow: "ellipsis",
-                        fontSize: "1rem",
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: "vertical",
-                        lineHeight: "1.5em",
-                      }
-                      }
-                      className="hidden xl:[display:-webkit-box]"
-                    />
-                  </div>
-                </ListBox>
-              </Link>
+                    <div className="mt-3">
+                      <div className="flow-root">
+                        <div className="flex float-left relative">
+                          <RecipeName className="transition-colors duration-300 ease-in-out group-hover:underline text-l lg:[font-size:max(1.6rem,min(5vw,1.6rem))]">
+                            {capitalizeTitle(recipe.title.replace(/^.*\?\?/, ""))}
+                          </RecipeName>
+                        </div>
+                      </div>
+                      <RecipeExtras>
+                        <ClockIcon className="w-4 h-4" />
+                        &nbsp;{recipe.readyInMinutes} mins&nbsp;&nbsp;|&nbsp;&nbsp;
+                        <UserIcon className="w-4 h-4" />
+                        &nbsp;{recipe.servings}
+                      </RecipeExtras>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: recipe.summary
+                            .replace(/(<([^>]+)>)/gi, "")
+                            .replace(/^(.)/, (match: string) => match.toUpperCase()),
+                        }}
+                        style={{
+                          overflow: "hidden",
+                          marginLeft: "15px",
+                          textOverflow: "ellipsis",
+                          fontSize: "1rem",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          lineHeight: "1.5em",
+                        }
+                        }
+                        className="hidden xl:[display:-webkit-box]"
+                      />
+                    </div>
+                  </ListBox>
+                </Link>
 
-            </div>
-          ))}
-        </ResultBox>
+              </div>
+            ))}
+          </ResultBox>
+          </div>
       )}
-    </Hero>
-  );
+        </Hero>
+      );
 }

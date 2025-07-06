@@ -8,19 +8,27 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 
 const Hero = styled.div`
-    min-height: 74vh;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
     color: black;
+    @media (max-width: 768px) {
+      align-items: flex-start;
+      padding-top: 2rem;
+  }
 `;
 
 const Content = styled.div`
     width: 100%;
     max-width: 583px;
     display: grid;
-    place-items: center;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 768px) {
+      place-items: start;
+  }
 `;
 
 const RecipeLogo = styled.h1`

@@ -10,18 +10,27 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Hero = styled.div`
-    min-height: 74vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
 `;
 
 const Content = styled.div`
-    width: 100%;
-    max-width: 583px;
-    display: grid;
-    place-items: center;
+  width: 100%;
+  max-width: 583px;
+  display: grid;
+  place-items: center;
+
+  @media (max-width: 768px) {
+    place-items: start;
+  }
 `;
 
 const Home: React.FC = () => {

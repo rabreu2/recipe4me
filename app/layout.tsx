@@ -40,8 +40,8 @@ export default function RootLayout({
         <AuthProvider>
           <div className="flex flex-col min-h-screen w-full min-w-[360px]">
             <Navbar />
-            <main className="flex flex-col flex-grow w-full bg-[#ebe8d8]">
-              <div className="flex flex-col flex-grow w-full">{children}</div> {/* This ensures children take full height */}
+            <main className="flex-grow w-full bg-[#ebe8d8] content-center">
+              {children}
             </main>
             <Footer />
           </div>
