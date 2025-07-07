@@ -38,7 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
-          <div className="flex flex-col min-h-screen w-full min-w-[360px]">
+          <div className="flex flex-col min-h-[100dvh] w-full min-w-[360px]">
             <Navbar />
             <main className="flex-grow w-full bg-[#ebe8d8] content-center">
               {children}
