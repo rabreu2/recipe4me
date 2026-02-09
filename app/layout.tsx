@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import React from "react";
 import { AuthProvider } from "./LoginContext";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 // g4me green : #22b14c 
 // g4me dgreen : #187e37
@@ -46,6 +47,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <SpeedInsights />
+          <Analytics />
         </AuthProvider>
       </body>
     </html>
